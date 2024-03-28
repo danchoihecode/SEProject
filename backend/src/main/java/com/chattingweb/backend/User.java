@@ -16,4 +16,9 @@ public class User {
     @Column
     private Integer age;
 
+    public User(Integer id, String firstName, String lastName, Integer age){
+        this.firstName =firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
 }

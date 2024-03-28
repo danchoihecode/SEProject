@@ -16,10 +16,7 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    @GetMapping
-    public List<User> findAllUser(){
-        return userRepository.findAll();
-    }
+
 
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable Integer id){
@@ -28,7 +25,12 @@ public class UserController {
 
     @GetMapping
     public List<User> findByAgeLessThan(@RequestParam(name = "age",required = false) Integer age){
-        return userRepository.findByAgeLessThan(age);
+        if(age != null){
+            return userRepository.findByAgeLessThan(age);
+        }else{
+            return userRepository.findAll();
+        }
+
     }
 
     @ResponseStatus(HttpStatus.CREATED)
