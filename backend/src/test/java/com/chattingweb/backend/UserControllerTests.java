@@ -12,15 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserControllerTests {
     @Autowired
     TestRestTemplate restTemplate;
-    @Test
-    public void shouldReturnCorrectUsers(){
-
-
-    }
 
     @Test
     public void shouldCreateUser(){
-        User newUser = new User(null,"David","Han",12);
+        User newUser = new User( "David","Han",12L);
         ResponseEntity<Void> createResponse = restTemplate.postForEntity("/users", newUser, Void.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
