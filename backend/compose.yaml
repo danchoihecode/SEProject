@@ -1,9 +1,13 @@
 services:
   postgres:
     image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=chatdb'
-      - 'POSTGRES_PASSWORD=hustICT'
-      - 'POSTGRES_USER=tientu'
+    build:
+      context: ./postgres-db
+      dockerfile: Dockerfile
     ports:
       - '5432:5432'
+    volumes:
+      - ./postgres-db/postgres-data:/var/lib/postgresql/data
+      - ./postgres-db/ChatWeb.sql:/docker-entrypoint-initdb.d/ChatWeb.sql
+    env_file:
+      - .env
