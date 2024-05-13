@@ -1,4 +1,5 @@
 # SEProject
+
 ## Front-end 
 
 ## Back-end
@@ -16,4 +17,3 @@
 #### option 2: sử dụng postgres database thật từ pgadmin4 (cái này tôi đéo làm nên mấy ô tự nghiên cứu)
 - cài đặt rồi tạo database bằng GUI cho cùng tên db user với password như trong file .env
 - rồi chạy file sql có sẵn
-  
