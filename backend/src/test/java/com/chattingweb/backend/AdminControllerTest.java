@@ -9,15 +9,13 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTests {
+public class AdminControllerTest {
     @Autowired
     TestRestTemplate restTemplate;
 
     @Test
-    public void shouldCreateUser(){
-        User newUser = new User( "David","Han",12L);
-        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/users", newUser, Void.class);
-        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    void shouldReturnOkResponse(){
+        ResponseEntity<String> response = restTemplate.getForEntity("/admin", String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
 }
