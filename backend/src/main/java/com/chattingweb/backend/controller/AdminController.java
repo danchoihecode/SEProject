@@ -1,6 +1,6 @@
 package com.chattingweb.backend.controller;
 
-import com.chattingweb.backend.entities.admin.AdminRepository;
+import com.chattingweb.backend.repository.admin.AdminRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
