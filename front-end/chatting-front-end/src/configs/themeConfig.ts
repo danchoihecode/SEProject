@@ -2,7 +2,7 @@
 import { PaletteMode } from '@mui/material'
 
 // ** Types
-import {ContentWidth} from "@/layouts/types";
+import {ContentWidth} from "@/layouts/LayOutTypes";
 
 type ThemeConfig = {
   mode: PaletteMode
@@ -17,7 +17,7 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'Materio' /* App Name */,
+  templateName: 'Chatting Web' /* App Name */,
   mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
 
