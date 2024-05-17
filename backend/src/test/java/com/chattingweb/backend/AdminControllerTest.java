@@ -1,5 +1,7 @@
 package com.chattingweb.backend;
 
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +16,13 @@ public class AdminControllerTest {
     TestRestTemplate restTemplate;
 
     @Test
-    void shouldReturnOkResponse(){
-        ResponseEntity<String> response = restTemplate.getForEntity("/admin", String.class);
+    void shouldReturnCorrectAdmin(){
+        ResponseEntity<String> response = restTemplate.getForEntity("/admin/0", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        DocumentContext documentContext = JsonPath.parse(response.getBody());
+        Number id = documentContext.read("$.id");
+        assertThat(id).isEqualTo(0);
+        String email = documentContext.read("$.adminEmail");
+        assertThat(email).isEqualTo("admin@gmail.com");
     }
 }

@@ -4,22 +4,22 @@ import com.chattingweb.backend.entities.post.Post;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "DeletedPost")
+@Table(name = "deletedpost")
 public class DeletedPost {
     @Id
-    @Column(name = "PostID", nullable = false)
+    @Column(name = "postid", nullable = false)
     private Integer id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PostID", nullable = false)
+    @JoinColumn(name = "postid", nullable = false)
     private Post post;
 
-    @Column(name = "DeleteReason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "deletereason", nullable = false, length = Integer.MAX_VALUE)
     private String deleteReason;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "AdminID", nullable = false)
+    @JoinColumn(name = "adminid", nullable = false)
     private Admin adminID;
 
     public Integer getId() {

@@ -4,24 +4,24 @@ import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "BannedUser")
+@Table(name = "banneduser")
 public class BannedUser {
     @EmbeddedId
     private BannedUserId id;
 
     @MapsId("userID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
-    @Column(name = "BanReason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "banreason", nullable = false, length = Integer.MAX_VALUE)
     private String banReason;
 
-    @Column(name = "Duration", nullable = false)
+    @Column(name = "duration", nullable = false)
     private Integer duration;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "AdminID", nullable = false)
+    @JoinColumn(name = "adminid", nullable = false)
     private Admin adminID;
 
     public BannedUserId getId() {

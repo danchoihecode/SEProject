@@ -6,25 +6,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 public class User {
     @Id
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "userid", nullable = false)
     private Integer id;
 
-    @Column(name = "UserFullName", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "userfullname", nullable = false, length = Integer.MAX_VALUE)
     private String userFullName;
 
-    @Column(name = "UserNickName", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "usernickname", nullable = false, length = Integer.MAX_VALUE)
     private String userNickName;
 
-    @Column(name = "UserAvatar")
+    @Column(name = "useravatar")
     private byte[] userAvatar;
 
-    @Column(name = "UserEmail", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "useremail", nullable = false, length = Integer.MAX_VALUE)
     private String userEmail;
 
-    @Column(name = "UserPassword", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "userpassword", nullable = false, length = Integer.MAX_VALUE)
     private String userPassword;
 
     public Integer getId() {

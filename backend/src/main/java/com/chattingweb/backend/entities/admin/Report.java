@@ -5,21 +5,21 @@ import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Report")
+@Table(name = "report")
 public class Report {
     @Id
-    @Column(name = "ReportID", nullable = false)
+    @Column(name = "reportid", nullable = false)
     private Integer id;
 
-    @Column(name = "ReportReason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "reportreason", nullable = false, length = Integer.MAX_VALUE)
     private String reportReason;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PostID", nullable = false)
+    @JoinColumn(name = "postid", nullable = false)
     private Post postID;
 
     public Integer getId() {

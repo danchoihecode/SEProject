@@ -5,23 +5,23 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "ConversationMembers")
+@Table(name = "conversationmembers")
 public class ConversationMember {
     @EmbeddedId
     private ConversationMemberId id;
 
     @MapsId("userID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
     @MapsId("conversationID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ConversationID", nullable = false)
+    @JoinColumn(name = "conversationid", nullable = false)
     private Conversation conversationID;
 
     @ColumnDefault("false")
-    @Column(name = "HasRead", nullable = false)
+    @Column(name = "hasread", nullable = false)
     private Boolean hasRead = false;
 
     public ConversationMemberId getId() {
