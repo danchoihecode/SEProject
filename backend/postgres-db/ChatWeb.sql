@@ -1,9 +1,9 @@
 CREATE TABLE Users (
   UserID int PRIMARY KEY,
-  UserFullName varchar NOT NULL,
-  UserNickName varchar NOT NULL,
+  UserFullName varchar(100) NOT NULL,
+  UserNickName varchar(100) NOT NULL,
   UserAvatar bytea,
-  UserEmail varchar UNIQUE NOT NULL,
+  UserEmail varchar(100) UNIQUE NOT NULL,
   UserPassword varchar NOT NULL
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE ConversationMembers (
 
 CREATE TABLE Groups (
   GroupID int PRIMARY KEY,
-  GroupName varchar NOT NULL,
+  GroupName varchar(100) NOT NULL,
   GroupAvatar bytea,
   Owner int NOT NULL
 );
@@ -59,7 +59,7 @@ CREATE TABLE PostReaction (
 
 CREATE TABLE Report (
   ReportID int PRIMARY KEY,
-  ReportReason varchar NOT NULL,
+  ReportReason varchar(200) NOT NULL,
   UserID int NOT NULL,
   PostID int NOT NULL
 );
@@ -67,17 +67,17 @@ CREATE TABLE Report (
 CREATE TABLE Admin (
   AdminID int PRIMARY KEY,
   AdminPassword varchar NOT NULL,
-  AdminEmail varchar UNIQUE NOT NULL
+  AdminEmail varchar(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE DeletedPost (
-  DeleteReason varchar NOT NULL,
+  DeleteReason varchar(200) NOT NULL,
   PostID int NOT NULL PRIMARY KEY,
   AdminID int NOT NULL
 );
 
 CREATE TABLE BannedUser (
-  BanReason varchar NOT NULL,
+  BanReason varchar(200) NOT NULL,
   Duration int NOT NULL,
   UserID int NOT NULL,
   AdminID int NOT NULL,

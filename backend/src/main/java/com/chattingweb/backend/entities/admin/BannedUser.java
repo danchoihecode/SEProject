@@ -14,7 +14,7 @@ public class BannedUser {
     @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
-    @Column(name = "banreason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "banreason", nullable = false, length = 200)
     private String banReason;
 
     @Column(name = "duration", nullable = false)

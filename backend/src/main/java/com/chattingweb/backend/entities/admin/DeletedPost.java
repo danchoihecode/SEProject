@@ -15,7 +15,7 @@ public class DeletedPost {
     @JoinColumn(name = "postid", nullable = false)
     private Post post;
 
-    @Column(name = "deletereason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "deletereason", nullable = false, length = 200)
     private String deleteReason;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -16,6 +16,7 @@ public class Post {
     @Column(name = "postimage")
     private byte[] postImage;
 
+
     @Column(name = "posttext", length = Integer.MAX_VALUE)
     private String postText;
 

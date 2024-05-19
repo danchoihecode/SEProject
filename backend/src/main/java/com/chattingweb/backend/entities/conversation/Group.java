@@ -15,7 +15,7 @@ public class Group {
     @JoinColumn(name = "groupid", nullable = false)
     private Conversation conversation;
 
-    @Column(name = "groupname", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "groupname", nullable = false, length = 100)
     private String groupName;
 
     @Column(name = "groupavatar")

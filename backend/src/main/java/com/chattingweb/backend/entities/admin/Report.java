@@ -11,7 +11,7 @@ public class Report {
     @Column(name = "reportid", nullable = false)
     private Integer id;
 
-    @Column(name = "reportreason", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "reportreason", nullable = false, length = 200)
     private String reportReason;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
