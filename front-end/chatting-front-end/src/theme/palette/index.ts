@@ -1,6 +1,6 @@
 // ** Type Imports
 import { PaletteMode } from '@mui/material'
-import {ThemeColor} from "@/layouts/types";
+import {ThemeColor} from "@/layouts/LayOutTypes";
 
 const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
   // ** Vars
@@ -10,7 +10,7 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
 
   const primaryGradient = () => {
     if (themeColor === 'primary') {
-      return '#C6A7FE'
+      return '#3ECAF8'
     } else if (themeColor === 'secondary') {
       return '#9C9FA4'
     } else if (themeColor === 'success') {
@@ -36,9 +36,9 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
     },
     mode: mode,
     primary: {
-      light: '#9E69FD',
-      main: '#9155FD',
-      dark: '#804BDF',
+      light: '#3ECAF8',
+      main: '#1AA0D9',
+      dark: '#37AD6D',
       contrastText: '#FFF'
     },
     secondary: {

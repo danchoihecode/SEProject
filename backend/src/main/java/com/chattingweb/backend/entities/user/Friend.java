@@ -3,19 +3,19 @@ package com.chattingweb.backend.entities.user;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Friends")
+@Table(name = "friends")
 public class Friend {
     @EmbeddedId
     private FriendId id;
 
     @MapsId("userID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
     @MapsId("friendID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "FriendID", nullable = false)
+    @JoinColumn(name = "friendid", nullable = false)
     private User friendID;
 
     public FriendId getId() {

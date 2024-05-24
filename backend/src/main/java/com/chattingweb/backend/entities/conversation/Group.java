@@ -4,25 +4,25 @@ import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Group")
+@Table(name = "groups")
 public class Group {
     @Id
-    @Column(name = "GroupID", nullable = false)
+    @Column(name = "groupid", nullable = false)
     private Integer id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "GroupID", nullable = false)
+    @JoinColumn(name = "groupid", nullable = false)
     private Conversation conversation;
 
-    @Column(name = "GroupName", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "groupname", nullable = false, length = 100)
     private String groupName;
 
-    @Column(name = "GroupAvatar")
+    @Column(name = "groupavatar")
     private byte[] groupAvatar;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Owner", nullable = false)
+    @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
     public Integer getId() {

@@ -7,31 +7,31 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.Instant;
 
 @Entity
-@Table(name = "Message")
+@Table(name = "message")
 public class Message {
     @Id
-    @Column(name = "MessageID", nullable = false)
+    @Column(name = "messageid", nullable = false)
     private Integer id;
 
-    @Column(name = "MessageFile")
+    @Column(name = "messagefile")
     private byte[] messageFile;
 
-    @Column(name = "MessageContent", length = Integer.MAX_VALUE)
+    @Column(name = "messagecontent", length = Integer.MAX_VALUE)
     private String messageContent;
 
-    @Column(name = "MessageImage")
+    @Column(name = "messageimage")
     private byte[] messageImage;
 
     @ColumnDefault("now()")
-    @Column(name = "MessageDate", nullable = false)
+    @Column(name = "messagedate", nullable = false)
     private Instant messageDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "SenderID", nullable = false)
+    @JoinColumn(name = "senderid", nullable = false)
     private User senderID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ConversationID")
+    @JoinColumn(name = "conversationid")
     private Conversation conversationID;
 
     public Integer getId() {

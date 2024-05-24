@@ -6,16 +6,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Admin")
+@Table(name = "admin")
 public class Admin {
     @Id
-    @Column(name = "AdminID", nullable = false)
+    @Column(name = "adminid", nullable = false)
     private Integer id;
 
-    @Column(name = "AdminPassword", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "adminpassword", nullable = false)
     private String adminPassword;
 
-    @Column(name = "AdminEmail", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "adminemail", nullable = false, length = 100)
     private String adminEmail;
 
     public Integer getId() {

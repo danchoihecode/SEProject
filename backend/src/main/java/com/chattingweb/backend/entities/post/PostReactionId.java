@@ -10,10 +10,10 @@ import java.util.Objects;
 @Embeddable
 public class PostReactionId implements Serializable {
     private static final long serialVersionUID = 6341251750546409230L;
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "userid", nullable = false)
     private Integer userID;
 
-    @Column(name = "PostID", nullable = false)
+    @Column(name = "postid", nullable = false)
     private Integer postID;
 
     public Integer getUserID() {

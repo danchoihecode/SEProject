@@ -4,19 +4,19 @@ import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PostReaction")
+@Table(name = "postreaction")
 public class PostReaction {
     @EmbeddedId
     private PostReactionId id;
 
     @MapsId("userID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
     @MapsId("postID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PostID", nullable = false)
+    @JoinColumn(name = "postid", nullable = false)
     private Post postID;
 
     public PostReactionId getId() {

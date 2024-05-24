@@ -8,7 +8,7 @@ import { PaletteMode } from '@mui/material'
 // ** ThemeConfig Import
 import themeConfig from "@/configs/themeConfig";
 // ** Types Import
-import {ThemeColor,ContentWidth} from "@/layouts/types";
+import {ThemeColor,ContentWidth} from "@/layouts/LayOutTypes";
 import ThemeComponent from "@/theme/ThemeComponent";
 export type Settings = {
   mode: PaletteMode

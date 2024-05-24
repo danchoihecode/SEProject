@@ -7,28 +7,29 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.Instant;
 
 @Entity
-@Table(name = "Post")
+@Table(name = "post")
 public class Post {
     @Id
-    @Column(name = "PostID", nullable = false)
+    @Column(name = "postid", nullable = false)
     private Integer id;
 
-    @Column(name = "PostImage")
+    @Column(name = "postimage")
     private byte[] postImage;
 
-    @Column(name = "PostText", length = Integer.MAX_VALUE)
+
+    @Column(name = "posttext", length = Integer.MAX_VALUE)
     private String postText;
 
     @ColumnDefault("now()")
-    @Column(name = "PostDate", nullable = false)
+    @Column(name = "postdate", nullable = false)
     private Instant postDate;
 
     @ColumnDefault("0")
-    @Column(name = "Like")
-    private Integer like;
+    @Column(name = "nolike")
+    private Integer noLike;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "UserID", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private User userID;
 
     public Integer getId() {
@@ -63,12 +64,12 @@ public class Post {
         this.postDate = postDate;
     }
 
-    public Integer getLike() {
-        return like;
+    public Integer getNoLike() {
+        return noLike;
     }
 
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setNoLike(Integer noLike) {
+        this.noLike = noLike;
     }
 
     public User getUserID() {
