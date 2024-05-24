@@ -10,10 +10,10 @@ import java.util.Objects;
 @Embeddable
 public class ConversationMemberId implements Serializable {
     private static final long serialVersionUID = 5300915410688434403L;
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "userid", nullable = false)
     private Integer userID;
 
-    @Column(name = "ConversationID", nullable = false)
+    @Column(name = "conversationid", nullable = false)
     private Integer conversationID;
 
     public Integer getUserID() {

@@ -11,10 +11,10 @@ import java.util.Objects;
 @Embeddable
 public class BannedUserId implements Serializable {
     private static final long serialVersionUID = 3505288091394310832L;
-    @Column(name = "UserID", nullable = false)
+    @Column(name = "userid", nullable = false)
     private Integer userID;
 
-    @Column(name = "BanDate", nullable = false)
+    @Column(name = "bandate", nullable = false)
     private Instant banDate;
 
     public Integer getUserID() {
