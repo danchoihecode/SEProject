@@ -1,99 +1,150 @@
 'use client'
 import Box from '@mui/material/Box'
 import {
-  Button,
-  Checkbox,
-  FormControl,
-  IconButton,
-  InputAdornment, Link,
-  TextField,
-  Typography
+    Button,
+    Checkbox,
+    IconButton,
+    InputAdornment, Link, Stack,
+    TextField,
+    Typography
 } from "@mui/material";
 import {useRouter} from "next/navigation";
-import {ChangeEvent, useState} from "react";
+import {useState} from "react";
 import {EyeOffOutline, EyeOutline} from "mdi-material-ui";
-
-export interface State {
-  password: string
-  showPassword: boolean
-}
+import { signIn} from "next-auth/react";
+import {useFormik} from "formik";
+import * as Yup from "yup";
 
 
 const LoginPage = () => {
-  // ** State
-  const [values, setValues] = useState<State>({
-    password: '',
-    showPassword: false
-  })
+    // ** State
+    const [showPassword, setShowPassword] = useState(false)
+    // ** Hook
+    const router = useRouter()
 
-  // ** Hook
-  const router = useRouter()
+    const formik = useFormik({
+        initialValues: {
+            email:'',
+            password: '',
+            submit: null
+        },
+        validationSchema: Yup.object({
+            email: Yup
+                .string()
+                .max(100)
+                .email('Must be a valid email')
+                .required('Email is required'),
+            password: Yup
+                .string()
+                .max(100)
+                .required('Password is required')
+        }),
+        onSubmit: async (values, helpers) => {
+            const response = await signIn('login', {
+                redirect: false,
+                email: values.email,
+                password: values.password
+            }) as ResponseData
+    
+            if (!response.error){
+                router.push('/home');
+            } else {
+                helpers.setStatus({ success: false });
+                helpers.setErrors({ submit: response.error });
+                helpers.setSubmitting(false);
+            }
+        }
+    });
 
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
 
   return (
-      <Box >
-          <Box sx={{mb:6}}>
-            <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+      <Box>
+          <Box sx={{mb: 6}}>
+              <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
           </Box>
 
-          <TextField autoFocus fullWidth id='email' label='Email' sx={{marginBottom: 4}}/>
-          <TextField fullWidth label='Password' value={values.password} id='auth-register-password'
-                     onChange={handleChange('password')}
-                     type={values.showPassword ? 'text' : 'password'}
-                     InputProps={{
-                       endAdornment:
-                           <InputAdornment position='end'>
-                             <IconButton
-                                 edge='end'
-                                 onClick={handleClickShowPassword}
-                                 aria-label='toggle password visibility'
-                             >
-                               {values.showPassword ? <EyeOutline fontSize='small'/> :
-                                   <EyeOffOutline fontSize='small'/>}
-                             </IconButton>
-                           </InputAdornment>
-                     }}
-          />
+          <form noValidate onSubmit={formik.handleSubmit}>
+              <Stack spacing={3} sx={{minWidth: '55vh'}}>
+                  {formik.errors.submit && (
+                      <Typography
+                          color="error"
+                          sx={{ mt: 3 }}
+                          variant="body2"
+                      >
+                          {formik.errors.submit}
+                      </Typography>
+                  )}
+                  <TextField fullWidth label='Email' sx={{marginBottom: 4}}
+                             name='email'
+                             error={!!(formik.touched.email && formik.errors.email)}
+                             helperText={formik.touched.email && formik.errors.email}
+                             onBlur={formik.handleBlur}
+                             value={formik.values.email}
+                             onChange={formik.handleChange}/>
+                  <TextField fullWidth label='Password'
+                             type={showPassword ? 'text' : 'password'}
+                             InputProps={{
+                                 endAdornment:
+                                     <InputAdornment position='end'>
+                                         <IconButton
+                                             edge='end'
+                                             onClick={() =>  setShowPassword(!showPassword)}
+                                             aria-label='toggle password visibility'
+                                         >
+                                             {showPassword ? <EyeOutline fontSize='small'/> :
+                                                 <EyeOffOutline fontSize='small'/>}
+                                         </IconButton>
+                                     </InputAdornment>
+                             }}
+                             name='password'
+                             error={!!(formik.touched.password && formik.errors.password)}
+                             helperText={formik.touched.password && formik.errors.password}
+                             onBlur={formik.handleBlur}
+                             value={formik.values.password}
+                             onChange={formik.handleChange}
+                  />
+              </Stack>
 
-          <Box
-              sx={{mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between'}}
-          >
-            <Box>
-              <Checkbox/>Remember Me
-            </Box>
-              <Link passHref href='/'>
-                  Forgot Password?
-              </Link>
-          </Box>
-          <Button
-              fullWidth
-              size='large'
-              variant='contained'
-              sx={{marginBottom: 7}}
-              onClick={() => router.push('/')}
-          >
-            Login
-          </Button>
-          <Box sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center'}}>
-            <Typography variant='body2' sx={{marginRight: 2}}>
-              New on our platform?
-            </Typography>
-            <Typography variant='body2'>
-              <Link passHref href='/auth/register'>
-                Create an account
-              </Link>
-            </Typography>
-          </Box>
+              <Box
+                  sx={{
+                      mb: 4,
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between'
+                  }}
+              >
+                  <Box>
+                      <Checkbox/>Remember Me
+                  </Box>
+                  <Link href='/'>
+                      Forgot Password?
+                  </Link>
+              </Box>
+              <Button
+                  fullWidth
+                  size='large'
+                  variant='contained'
+                  sx={{marginBottom: 7}}
+                  type='submit'
+              >
+                  Login
+              </Button>
+
+              <Box sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center'}}>
+                  <Typography variant='body2' sx={{marginRight: 2}}>
+                      New on our platform?
+                  </Typography>
+                  <Typography variant='body2'>
+                      <Link href='/auth/register'>
+                          Create an account
+                      </Link>
+                  </Typography>
+              </Box>
+          </form>
       </Box>
 
-  )
+)
 }
 
 

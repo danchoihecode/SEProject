@@ -10,7 +10,7 @@ const AuthLayout = ({ children }: Readonly<{children: ReactNode}>) => {
         <BlankLayoutWrapper className='layout-wrapper'>
             <Box className='app-content' sx={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
                 <Box className='content-center'>
-                    <Card sx={{ zIndex: 1,maxWidth:'55vh'}}>
+                    <Card sx={{ zIndex: 1}}>
                         <CardContent>
                             <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Image
