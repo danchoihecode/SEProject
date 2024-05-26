@@ -2,34 +2,42 @@ package com.chattingweb.backend.entities.conversation;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "groups")
 public class Group {
     @Id
-    @Column(name = "groupid", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "group_id", nullable = false)
+    private UUID id;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "groupid", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     private Conversation conversation;
 
-    @Column(name = "groupname", nullable = false, length = 100)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "group_name", nullable = false, length = 100)
     private String groupName;
 
-    @Column(name = "groupavatar")
+    @Column(name = "group_avatar")
     private byte[] groupAvatar;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

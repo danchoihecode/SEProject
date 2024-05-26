@@ -2,27 +2,33 @@ package com.chattingweb.backend.entities.admin;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "banneduser")
+@Table(name = "banned_user")
 public class BannedUser {
     @EmbeddedId
     private BannedUserId id;
 
-    @MapsId("userID")
+    @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-    private User userID;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "banreason", nullable = false, length = 200)
+    @Size(max = 200)
+    @NotNull
+    @Column(name = "ban_reason", nullable = false, length = 200)
     private String banReason;
 
+    @NotNull
     @Column(name = "duration", nullable = false)
     private Integer duration;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "adminid", nullable = false)
-    private Admin adminID;
+    @JoinColumn(name = "admin_id", nullable = false)
+    private User admin;
 
     public BannedUserId getId() {
         return id;
@@ -32,12 +38,12 @@ public class BannedUser {
         this.id = id;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getBanReason() {
@@ -56,12 +62,12 @@ public class BannedUser {
         this.duration = duration;
     }
 
-    public Admin getAdminID() {
-        return adminID;
+    public User getAdmin() {
+        return admin;
     }
 
-    public void setAdminID(Admin adminID) {
-        this.adminID = adminID;
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
 }

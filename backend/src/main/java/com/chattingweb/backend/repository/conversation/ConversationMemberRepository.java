@@ -5,4 +5,4 @@ import com.chattingweb.backend.entities.conversation.ConversationMemberId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConversationMemberRepository extends JpaRepository<ConversationMember, ConversationMemberId> {
-}
+  }

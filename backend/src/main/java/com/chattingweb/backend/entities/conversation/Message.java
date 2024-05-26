@@ -2,6 +2,7 @@ package com.chattingweb.backend.entities.conversation;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -10,35 +11,38 @@ import java.time.Instant;
 @Table(name = "message")
 public class Message {
     @Id
-    @Column(name = "messageid", nullable = false)
-    private Integer id;
+    @ColumnDefault("nextval('message_message_id_seq'::regclass)")
+    @Column(name = "message_id", nullable = false)
+    private Long id;
 
-    @Column(name = "messagefile")
+    @Column(name = "message_file")
     private byte[] messageFile;
 
-    @Column(name = "messagecontent", length = Integer.MAX_VALUE)
+    @Column(name = "message_content", length = Integer.MAX_VALUE)
     private String messageContent;
 
-    @Column(name = "messageimage")
+    @Column(name = "message_image")
     private byte[] messageImage;
 
+    @NotNull
     @ColumnDefault("now()")
-    @Column(name = "messagedate", nullable = false)
+    @Column(name = "message_date", nullable = false)
     private Instant messageDate;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "senderid", nullable = false)
-    private User senderID;
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conversationid")
-    private Conversation conversationID;
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -74,20 +78,20 @@ public class Message {
         this.messageDate = messageDate;
     }
 
-    public User getSenderID() {
-        return senderID;
+    public User getSender() {
+        return sender;
     }
 
-    public void setSenderID(User senderID) {
-        this.senderID = senderID;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public Conversation getConversationID() {
-        return conversationID;
+    public Conversation getConversation() {
+        return conversation;
     }
 
-    public void setConversationID(Conversation conversationID) {
-        this.conversationID = conversationID;
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
 }

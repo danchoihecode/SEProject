@@ -2,35 +2,41 @@ package com.chattingweb.backend.entities.admin;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 @Embeddable
 public class BannedUserId implements Serializable {
-    private static final long serialVersionUID = 3505288091394310832L;
-    @Column(name = "userid", nullable = false)
-    private Integer userID;
+    private static final long serialVersionUID = 3196421244974325034L;
+    @NotNull
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "bandate", nullable = false)
-    private Instant banDate;
+    @NotNull
+    @Column(name = "band_date", nullable = false)
+    private Instant bandDate;
 
-    public Integer getUserID() {
-        return userID;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
-    public Instant getBanDate() {
-        return banDate;
+    public Instant getBandDate() {
+        return bandDate;
     }
 
-    public void setBanDate(Instant banDate) {
-        this.banDate = banDate;
+    public void setBandDate(Instant bandDate) {
+        this.bandDate = bandDate;
     }
 
     @Override
@@ -38,13 +44,13 @@ public class BannedUserId implements Serializable {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         BannedUserId entity = (BannedUserId) o;
-        return Objects.equals(this.banDate, entity.banDate) &&
-                Objects.equals(this.userID, entity.userID);
+        return Objects.equals(this.bandDate, entity.bandDate) &&
+                Objects.equals(this.userId, entity.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(banDate, userID);
+        return Objects.hash(bandDate, userId);
     }
 
 }

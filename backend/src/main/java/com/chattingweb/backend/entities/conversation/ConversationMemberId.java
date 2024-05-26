@@ -2,34 +2,38 @@ package com.chattingweb.backend.entities.conversation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 @Embeddable
 public class ConversationMemberId implements Serializable {
-    private static final long serialVersionUID = 5300915410688434403L;
-    @Column(name = "userid", nullable = false)
-    private Integer userID;
+    private static final long serialVersionUID = -1330969740317256650L;
+    @NotNull
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "conversationid", nullable = false)
-    private Integer conversationID;
+    @NotNull
+    @Column(name = "conversation_id", nullable = false)
+    private UUID conversationId;
 
-    public Integer getUserID() {
-        return userID;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
-    public Integer getConversationID() {
-        return conversationID;
+    public UUID getConversationId() {
+        return conversationId;
     }
 
-    public void setConversationID(Integer conversationID) {
-        this.conversationID = conversationID;
+    public void setConversationId(UUID conversationId) {
+        this.conversationId = conversationId;
     }
 
     @Override
@@ -37,13 +41,13 @@ public class ConversationMemberId implements Serializable {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ConversationMemberId entity = (ConversationMemberId) o;
-        return Objects.equals(this.conversationID, entity.conversationID) &&
-                Objects.equals(this.userID, entity.userID);
+        return Objects.equals(this.conversationId, entity.conversationId) &&
+                Objects.equals(this.userId, entity.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(conversationID, userID);
+        return Objects.hash(conversationId, userId);
     }
 
 }
