@@ -29,9 +29,9 @@ public class AuthenticationService {
         user.setFullName(registerUser.getFullName());
         user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         user.setEmail(registerUser.getEmail());
-//        int newId = userRepository.findAll().size() + 1;
+        int newId = userRepository.findAll().size() + 1;
 //        user.setId(newId);
-//        user.setNickName("user" + newId);
+        user.setNickName("user" + newId);
         return userRepository.save(user);
     }
 
