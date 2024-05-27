@@ -2,34 +2,38 @@ package com.chattingweb.backend.entities.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 @Embeddable
 public class FriendId implements Serializable {
-    private static final long serialVersionUID = -3172181628021209315L;
-    @Column(name = "userid", nullable = false)
-    private Integer userID;
+    private static final long serialVersionUID = -5795776432954197759L;
+    @NotNull
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "friendid", nullable = false)
-    private Integer friendID;
+    @NotNull
+    @Column(name = "friend_id", nullable = false)
+    private UUID friendId;
 
-    public Integer getUserID() {
-        return userID;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
-    public Integer getFriendID() {
-        return friendID;
+    public UUID getFriendId() {
+        return friendId;
     }
 
-    public void setFriendID(Integer friendID) {
-        this.friendID = friendID;
+    public void setFriendId(UUID friendId) {
+        this.friendId = friendId;
     }
 
     @Override
@@ -37,13 +41,13 @@ public class FriendId implements Serializable {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         FriendId entity = (FriendId) o;
-        return Objects.equals(this.friendID, entity.friendID) &&
-                Objects.equals(this.userID, entity.userID);
+        return Objects.equals(this.friendId, entity.friendId) &&
+                Objects.equals(this.userId, entity.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(friendID, userID);
+        return Objects.hash(friendId, userId);
     }
 
 }

@@ -1,25 +1,27 @@
 package com.chattingweb.backend.entities.conversation;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "conversation")
 public class Conversation {
     @Id
-    @Column(name = "conversationid", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "conversation_id", nullable = false)
+    private UUID id;
 
-    @Column(name = "isgroup", nullable = false)
+    @NotNull
+    @Column(name = "is_group", nullable = false)
     private Boolean isGroup = false;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

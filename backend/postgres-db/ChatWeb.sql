@@ -1,123 +1,115 @@
 CREATE TABLE Users (
-  UserID int PRIMARY KEY,
-  UserFullName varchar(100) NOT NULL,
-  UserNickName varchar(100) NOT NULL,
-  UserAvatar bytea,
-  UserEmail varchar(100) UNIQUE NOT NULL,
-  UserPassword varchar NOT NULL
+  user_id uuid PRIMARY KEY,
+  full_name varchar(100) NOT NULL,
+  nick_name varchar(100) NOT NULL,
+  avatar bytea,
+  email varchar(100) UNIQUE NOT NULL,
+  password varchar NOT NULL,
+  is_admin boolean default false
 );
 
 CREATE TABLE Friends (
-  UserID int,
-  FriendID int,
-    PRIMARY KEY (UserID,FriendID)
+  user_id uuid,
+  friend_id uuid,
+    PRIMARY KEY (user_id,friend_id)
 );
 
 CREATE TABLE Conversation (
-  ConversationID int PRIMARY KEY,
-  IsGroup bool NOT NULL
+  conversation_id uuid PRIMARY KEY,
+  is_group bool NOT NULL
 );
 
-CREATE TABLE ConversationMembers (
-  ConversationID int,
-  UserID int,
-  HasRead bool NOT NULL DEFAULT false,
-  PRIMARY KEY (UserID,ConversationID)
+CREATE TABLE Conversation_Members (
+  conversation_id uuid,
+  user_id uuid,
+  has_read bool NOT NULL DEFAULT false,
+  PRIMARY KEY (user_id,conversation_id)
 );
 
 CREATE TABLE Groups (
-  GroupID int PRIMARY KEY,
-  GroupName varchar(100) NOT NULL,
-  GroupAvatar bytea,
-  Owner int NOT NULL
+  group_id uuid PRIMARY KEY,
+  group_name varchar(100) NOT NULL,
+  group_avatar bytea,
+  owner uuid NOT NULL
 );
 
 CREATE TABLE Message (
-  MessageID int PRIMARY KEY,
-  MessageFile bytea,
-  MessageContent text,
-  MessageImage bytea,
-  MessageDate timestamp NOT NULL DEFAULT (now()),
-  SenderID int NOT NULL,
-  ConversationID int
+  message_id bigserial PRIMARY KEY,
+  message_file bytea,
+  message_content text,
+  message_image bytea,
+  message_date timestamp NOT NULL DEFAULT (now()),
+  sender_id uuid NOT NULL,
+  conversation_id uuid
 );
 
 CREATE TABLE Post (
-  PostID int PRIMARY KEY,
-  PostImage bytea,
-  PostText text,
-  PostDate timestamp NOT NULL DEFAULT (now()),
-  NoLike int DEFAULT 0,
-  UserID int NOT NULL
+  post_id bigserial PRIMARY KEY,
+  post_image bytea,
+  post_text text,
+  post_date timestamp NOT NULL DEFAULT (now()),
+  no_like int DEFAULT 0,
+  user_id uuid NOT NULL
 );
 
-CREATE TABLE PostReaction (
-  UserID int,
-  PostID int,
-  PRIMARY KEY (UserID,PostID)
+CREATE TABLE Post_Reaction (
+  user_id uuid,
+  post_id bigserial,
+  PRIMARY KEY (user_id,post_id)
 );
 
 CREATE TABLE Report (
-  ReportID int PRIMARY KEY,
-  ReportReason varchar(200) NOT NULL,
-  UserID int NOT NULL,
-  PostID int NOT NULL
+  report_id bigserial PRIMARY KEY,
+  report_reason varchar(200) NOT NULL,
+  user_id uuid NOT NULL,
+  post_id bigserial NOT NULL
 );
 
-CREATE TABLE Admin (
-  AdminID int PRIMARY KEY,
-  AdminPassword varchar NOT NULL,
-  AdminEmail varchar(100) UNIQUE NOT NULL
+CREATE TABLE Deleted_Post (
+  delete_reason varchar(200) NOT NULL,
+  post_id bigserial NOT NULL PRIMARY KEY,
+  admin_id uuid NOT NULL
 );
 
-CREATE TABLE DeletedPost (
-  DeleteReason varchar(200) NOT NULL,
-  PostID int NOT NULL PRIMARY KEY,
-  AdminID int NOT NULL
+CREATE TABLE Banned_User (
+  ban_reason varchar(200) NOT NULL,
+  duration int NOT NULL,
+  user_id uuid NOT NULL,
+  admin_id uuid NOT NULL,
+  band_date timestamp,
+  PRIMARY KEY (user_id,band_date)
 );
 
-CREATE TABLE BannedUser (
-  BanReason varchar(200) NOT NULL,
-  Duration int NOT NULL,
-  UserID int NOT NULL,
-  AdminID int NOT NULL,
-  BanDate timestamp,
-  PRIMARY KEY (UserID,BanDate)
-);
+ALTER TABLE Friends ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE Friends ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
+ALTER TABLE Friends ADD FOREIGN KEY (friend_id) REFERENCES Users (user_id);
 
-ALTER TABLE Friends ADD FOREIGN KEY (FriendID) REFERENCES Users (UserID);
+ALTER TABLE Conversation_Members ADD FOREIGN KEY (conversation_id) REFERENCES Conversation (conversation_id);
 
-ALTER TABLE ConversationMembers ADD FOREIGN KEY (ConversationID) REFERENCES Conversation (ConversationID);
+ALTER TABLE Conversation_Members ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE ConversationMembers ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
+ALTER TABLE Groups ADD FOREIGN KEY (group_id) REFERENCES Conversation (conversation_id);
 
-ALTER TABLE Groups ADD FOREIGN KEY (GroupID) REFERENCES Conversation (ConversationID);
+ALTER TABLE Groups ADD FOREIGN KEY (owner) REFERENCES Users (user_id);
 
-ALTER TABLE Groups ADD FOREIGN KEY (Owner) REFERENCES Users (UserID);
+ALTER TABLE Message ADD FOREIGN KEY (sender_id) REFERENCES Users (user_id);
 
-ALTER TABLE Message ADD FOREIGN KEY (SenderID) REFERENCES Users (UserID);
+ALTER TABLE Message ADD FOREIGN KEY (conversation_id) REFERENCES Conversation (conversation_id);
 
-ALTER TABLE Message ADD FOREIGN KEY (ConversationID) REFERENCES Conversation (ConversationID);
+ALTER TABLE Post ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE Post ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
+ALTER TABLE Post_Reaction ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE PostReaction ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
+ALTER TABLE Post_Reaction ADD FOREIGN KEY (post_id) REFERENCES Post (post_id);
 
-ALTER TABLE PostReaction ADD FOREIGN KEY (PostID) REFERENCES Post (PostID);
+ALTER TABLE Report ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE Report ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
+ALTER TABLE Report ADD FOREIGN KEY (post_id) REFERENCES Post (post_id);
 
-ALTER TABLE Report ADD FOREIGN KEY (PostID) REFERENCES Post (PostID);
+ALTER TABLE Deleted_Post ADD FOREIGN KEY (post_id) REFERENCES Post (post_id);
 
-ALTER TABLE DeletedPost ADD FOREIGN KEY (PostID) REFERENCES Post (PostID);
+ALTER TABLE Deleted_Post ADD FOREIGN KEY (admin_id) REFERENCES Users (user_id);
 
-ALTER TABLE DeletedPost ADD FOREIGN KEY (AdminID) REFERENCES Admin (AdminID);
+ALTER TABLE Banned_User ADD FOREIGN KEY (user_id) REFERENCES Users (user_id);
 
-ALTER TABLE BannedUser ADD FOREIGN KEY (UserID) REFERENCES Users (UserID);
-
-ALTER TABLE BannedUser ADD FOREIGN KEY (AdminID) REFERENCES Admin (AdminID);
-
-INSERT INTO Admin (AdminID, AdminPassword, AdminEmail)
-VALUES (0,'admin1234','admin@gmail.com');
+ALTER TABLE Banned_User ADD FOREIGN KEY (admin_id) REFERENCES Users (user_id);

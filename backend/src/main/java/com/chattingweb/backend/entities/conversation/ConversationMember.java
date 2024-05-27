@@ -2,26 +2,28 @@ package com.chattingweb.backend.entities.conversation;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "conversationmembers")
+@Table(name = "conversation_members")
 public class ConversationMember {
     @EmbeddedId
     private ConversationMemberId id;
 
-    @MapsId("userID")
+    @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-    private User userID;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @MapsId("conversationID")
+    @MapsId("conversationId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "conversationid", nullable = false)
-    private Conversation conversationID;
+    @JoinColumn(name = "conversation_id", nullable = false)
+    private Conversation conversation;
 
+    @NotNull
     @ColumnDefault("false")
-    @Column(name = "hasread", nullable = false)
+    @Column(name = "has_read", nullable = false)
     private Boolean hasRead = false;
 
     public ConversationMemberId getId() {
@@ -32,20 +34,20 @@ public class ConversationMember {
         this.id = id;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Conversation getConversationID() {
-        return conversationID;
+    public Conversation getConversation() {
+        return conversation;
     }
 
-    public void setConversationID(Conversation conversationID) {
-        this.conversationID = conversationID;
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
     public Boolean getHasRead() {

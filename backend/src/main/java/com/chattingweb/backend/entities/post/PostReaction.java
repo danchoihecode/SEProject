@@ -2,22 +2,23 @@ package com.chattingweb.backend.entities.post;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "postreaction")
+@Table(name = "post_reaction")
 public class PostReaction {
     @EmbeddedId
     private PostReactionId id;
 
-    @MapsId("userID")
+    @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-    private User userID;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @MapsId("postID")
+    @MapsId("postId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "postid", nullable = false)
-    private Post postID;
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
     public PostReactionId getId() {
         return id;
@@ -27,20 +28,20 @@ public class PostReaction {
         this.id = id;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Post getPostID() {
-        return postID;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostID(Post postID) {
-        this.postID = postID;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
 }

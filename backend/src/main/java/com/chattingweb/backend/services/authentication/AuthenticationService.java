@@ -26,12 +26,12 @@ public class AuthenticationService {
 
     public User signup(RegisterUser registerUser){
         User user = new User();
-        user.setUserFullName(registerUser.getFullName());
-        user.setUserPassword(passwordEncoder.encode(registerUser.getPassword()));
-        user.setUserEmail(registerUser.getEmail());
+        user.setFullName(registerUser.getFullName());
+        user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
+        user.setEmail(registerUser.getEmail());
         int newId = userRepository.findAll().size() + 1;
-        user.setId(newId);
-        user.setUserNickName("user" + newId);
+//        user.setId(newId);
+        user.setNickName("user" + newId);
         return userRepository.save(user);
     }
 
@@ -42,7 +42,7 @@ public class AuthenticationService {
                         loginUser.getPassword()
                 )
         );
-        return userRepository.findByUserEmail(loginUser.getEmail()).orElseThrow();
+        return userRepository.findByEmail(loginUser.getEmail()).orElseThrow();
     }
 
 }

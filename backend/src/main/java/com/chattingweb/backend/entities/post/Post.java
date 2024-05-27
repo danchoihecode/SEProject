@@ -2,6 +2,7 @@ package com.chattingweb.backend.entities.post;
 
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -10,33 +11,35 @@ import java.time.Instant;
 @Table(name = "post")
 public class Post {
     @Id
-    @Column(name = "postid", nullable = false)
-    private Integer id;
+    @ColumnDefault("nextval('post_post_id_seq'::regclass)")
+    @Column(name = "post_id", nullable = false)
+    private Long id;
 
-    @Column(name = "postimage")
+    @Column(name = "post_image")
     private byte[] postImage;
 
-
-    @Column(name = "posttext", length = Integer.MAX_VALUE)
+    @Column(name = "post_text", length = Integer.MAX_VALUE)
     private String postText;
 
+    @NotNull
     @ColumnDefault("now()")
-    @Column(name = "postdate", nullable = false)
+    @Column(name = "post_date", nullable = false)
     private Instant postDate;
 
     @ColumnDefault("0")
-    @Column(name = "nolike")
+    @Column(name = "no_like")
     private Integer noLike;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-    private User userID;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,12 +75,12 @@ public class Post {
         this.noLike = noLike;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

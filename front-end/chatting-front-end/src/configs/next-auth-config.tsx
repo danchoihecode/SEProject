@@ -69,8 +69,7 @@ export const authOption:NextAuthOptions = {
                     })
 
                     if (res.ok) {
-                        const data = await res.json()
-                        if (data) return data
+                        return {message: "register success"} as any
                     } else {
                         return {error:{status:res.status,message:res.statusText}};
                     }

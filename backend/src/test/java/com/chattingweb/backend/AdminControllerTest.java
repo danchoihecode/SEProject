@@ -15,6 +15,7 @@ public class AdminControllerTest {
     @Autowired
     TestRestTemplate restTemplate;
 
+
     @Test
     void shouldReturnCorrectAdmin(){
 //        ResponseEntity<String> response = restTemplate.getForEntity("/admin/0", String.class);
