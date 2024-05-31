@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 
 // These two values should be a bit less than actual token lifetimes
-const BACKEND_ACCESS_TOKEN_LIFETIME = 6*60;            // 6 minutes
+const BACKEND_ACCESS_TOKEN_LIFETIME = 60*60;            // 6 minutes
 export const getCurrentEpochTime = () => {
     return Math.floor(new Date().getTime() / 1000);
 };
@@ -39,7 +39,7 @@ export const authOption:NextAuthOptions = {
                         method: 'POST',
                         body: JSON.stringify(credentials),
                         headers:{ "Content-Type": "application/json" },
-                        cache: "no-store"
+                        cache:"no-cache" && "no-store"
                     })
 
                     if (res.ok){
@@ -65,7 +65,7 @@ export const authOption:NextAuthOptions = {
                         method: 'POST',
                         body: JSON.stringify(credentials),
                         headers: {"Content-Type": "application/json"},
-                        cache: "no-store"
+                        cache:"no-cache" && "no-store"
                     })
 
                     if (res.ok) {
@@ -92,7 +92,8 @@ export const authOption:NextAuthOptions = {
         async jwt({user, token, account}) {
             if (user && account) {
                 let backendResponse:LoginResponseData = SIGN_IN_PROVIDERS.includes(account.provider) ? user as LoginResponseData : account as LoginResponseData;
-                token["access_token"] = backendResponse.token;
+                token["access_token"] = backendResponse.token
+                token["id"] = backendResponse.userId
                 return token
             }
             return token

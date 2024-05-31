@@ -3,6 +3,8 @@ package com.chattingweb.backend.controller.friends;
 import com.chattingweb.backend.entities.user.User;
 import com.chattingweb.backend.modules.FriendData;
 import com.chattingweb.backend.repository.user.UserRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@SecurityRequirement(name = "Authentication")
 @RequestMapping("/friends")
 public class SearchFriendController {
 
@@ -28,8 +31,9 @@ public class SearchFriendController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
+    @GetMapping("/by-email")
     public ResponseEntity<FriendData> searchFriendsByEmail(
+            @Valid
             @Email(message = "Email Format Invalid!")
             @RequestParam(name = "email") String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -44,9 +48,9 @@ public class SearchFriendController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping
+    @GetMapping("/by-nick-name")
     public ResponseEntity<List<FriendData>> searchFriendsByNickName(
-            @Valid @RequestParam(name = "nickName") String nickName){
+            @Valid @RequestParam(name = "nick-name") String nickName){
         List<FriendData> friends = new ArrayList<>();
 
         List<User> userList = userRepository.findALlByNickNameContainingIgnoreCase(nickName, PageRequest.of(0,10));

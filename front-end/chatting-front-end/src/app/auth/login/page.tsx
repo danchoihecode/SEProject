@@ -47,7 +47,7 @@ const LoginPage = () => {
             }) as ResponseData
     
             if (!response.error){
-                router.push('/home');
+                router.push('/home/chat');
             } else {
                 helpers.setStatus({ success: false });
                 helpers.setErrors({ submit: response.error });

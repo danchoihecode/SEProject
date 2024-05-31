@@ -37,6 +37,18 @@ const List = (theme: Theme) => {
           color: theme.palette.text.primary
         }
       }
+    },
+    MuiListItemButton:{
+      styleOverrides: {
+        root:{
+          '&.Mui-selected': {
+            backgroundColor: theme.palette.action.selected, // Custom background color for selected item
+            '&:hover': {
+              backgroundColor: theme.palette.action.hover, // Custom hover color for selected item
+            },
+          },
+        }
+      }
     }
   }
 }
