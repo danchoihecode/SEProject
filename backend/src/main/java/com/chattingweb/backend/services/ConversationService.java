@@ -37,14 +37,6 @@ public class ConversationService {
             log.warn("Conversation list is empty");
             return null;
         }
-
-        log.debug("get last message");
-        for(ConversationListItem conversationListItem : conversationListItems){
-            Optional<Message> optionalMessage
-                    = messageRepository.findFirstByConversation_IdOrderByMessageDateDesc(conversationListItem.getConversationId());
-            optionalMessage.ifPresent(message -> conversationListItem.setLatestMessage(message.getMessageContent()));
-        }
-
         log.info("Size of conversation list is {}", conversationListItems.size());
         return conversationListItems;
     }

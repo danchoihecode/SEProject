@@ -13,8 +13,7 @@ public class ConversationListItem {
     private UUID conversationId;
     private boolean isGroup;
     private boolean isRead;
-    @Getter
-    private String latestMessage;
+
 
     public ConversationListItem(byte[] avatar, String conversationName,boolean isGroup ,UUID conversationId, boolean isRead) {
         this.avatar = avatar;
@@ -57,8 +56,4 @@ public class ConversationListItem {
         return this;
     }
 
-    public ConversationListItem setLatestMessage(String latestMessage) {
-        this.latestMessage = latestMessage;
-        return this;
-    }
 }
