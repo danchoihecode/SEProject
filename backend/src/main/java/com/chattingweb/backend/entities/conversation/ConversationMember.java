@@ -3,8 +3,12 @@ package com.chattingweb.backend.entities.conversation;
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "conversation_members")
 public class ConversationMember {
@@ -25,37 +29,5 @@ public class ConversationMember {
     @ColumnDefault("false")
     @Column(name = "has_read", nullable = false)
     private Boolean hasRead = false;
-
-    public ConversationMemberId getId() {
-        return id;
-    }
-
-    public void setId(ConversationMemberId id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Conversation getConversation() {
-        return conversation;
-    }
-
-    public void setConversation(Conversation conversation) {
-        this.conversation = conversation;
-    }
-
-    public Boolean getHasRead() {
-        return hasRead;
-    }
-
-    public void setHasRead(Boolean hasRead) {
-        this.hasRead = hasRead;
-    }
 
 }

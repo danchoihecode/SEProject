@@ -1,13 +1,15 @@
 package com.chattingweb.backend.controller.friends;
 
 import com.chattingweb.backend.entities.user.User;
-import com.chattingweb.backend.modules.FriendData;
+import com.chattingweb.backend.models.FriendData;
 import com.chattingweb.backend.repository.user.UserRepository;
+import com.chattingweb.backend.services.SearchService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +24,13 @@ import java.util.Optional;
 @RestController
 @SecurityRequirement(name = "Authentication")
 @RequestMapping("/friends")
+@Slf4j
 public class SearchFriendController {
 
-    final
-    UserRepository userRepository;
+    private final SearchService searchService;
 
-    public SearchFriendController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SearchFriendController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @GetMapping("/by-email")
@@ -36,33 +38,24 @@ public class SearchFriendController {
             @Valid
             @Email(message = "Email Format Invalid!")
             @RequestParam(name = "email") String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            FriendData friend = new FriendData()
-                    .setUuid(user.getId())
-                    .setAvatar(user.getAvatar())
-                    .setNickName(user.getNickName());
-            return ResponseEntity.ok(friend);
+        FriendData friendData = searchService.searchFriendsByEmail(email);
+        if(friendData != null){
+            log.info("Find friend by email: {}", email);
+            return ResponseEntity.ok(friendData);
         }
+        log.info("Not found user by email: {}", email);
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/by-nick-name")
     public ResponseEntity<List<FriendData>> searchFriendsByNickName(
             @Valid @RequestParam(name = "nick-name") String nickName){
-        List<FriendData> friends = new ArrayList<>();
-
-        List<User> userList = userRepository.findALlByNickNameContainingIgnoreCase(nickName, PageRequest.of(0,10));
-        for(User user : userList){
-            friends.add(new FriendData()
-                    .setUuid(user.getId())
-                    .setNickName(user.getNickName())
-                    .setAvatar(user.getAvatar()));
-        }
-        if(friends.isEmpty()){
+        List<FriendData> friendDataList = searchService.searchFriendsByNickName(nickName);
+        if(friendDataList.isEmpty()){
+            log.info("Not found friends by name: {}", nickName);
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(friends);
+        log.info("Found friends by name: {}", nickName);
+        return ResponseEntity.ok(friendDataList);
     }
 }

@@ -3,12 +3,16 @@ package com.chattingweb.backend.entities.conversation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Embeddable
 public class ConversationMemberId implements Serializable {
     private static final long serialVersionUID = -1330969740317256650L;
@@ -19,22 +23,6 @@ public class ConversationMemberId implements Serializable {
     @NotNull
     @Column(name = "conversation_id", nullable = false)
     private UUID conversationId;
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public UUID getConversationId() {
-        return conversationId;
-    }
-
-    public void setConversationId(UUID conversationId) {
-        this.conversationId = conversationId;
-    }
 
     @Override
     public boolean equals(Object o) {
