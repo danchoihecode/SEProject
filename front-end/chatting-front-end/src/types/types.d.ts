@@ -8,7 +8,10 @@ declare type ResponseData = {
 declare type LoginResponseData={
     error:object,
     token:string,
-    expiresIn:number
+    expiresIn:number,
+    userId:string
 }
 
 declare type RegisterResponseData = any
+
+
