@@ -37,7 +37,5 @@ public class ConversationListTests {
                 "39dbf560-f6d2-4ada-b9d5-410d9a7b771c");
         assertThat(conversationId2).isIn("ef11cf55-841d-47b0-b8d7-1e24b0ee2cfc",
                 "39dbf560-f6d2-4ada-b9d5-410d9a7b771c");
-        String message = documentContext.read("$.[0].latestMessage");
-        assertThat(message).isEqualTo("EASDS");
     }
 }

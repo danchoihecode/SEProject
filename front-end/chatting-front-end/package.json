@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.17",
     "@mui/material-nextjs": "^5.15.11",
+    "@stomp/stompjs": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "formik": "^2.4.6",
     "mdi-material-ui": "^7.9.1",
