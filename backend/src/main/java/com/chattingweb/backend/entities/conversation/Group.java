@@ -20,7 +20,7 @@ public class Group {
     private UUID id;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id", nullable = false)
     private Conversation conversation;
 
