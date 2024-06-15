@@ -6,12 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post")
 public class Post {
     @Id
-    @ColumnDefault("nextval('post_post_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", nullable = false)
     private Long id;
 
@@ -24,7 +25,7 @@ public class Post {
     @NotNull
     @ColumnDefault("now()")
     @Column(name = "post_date", nullable = false)
-    private Instant postDate;
+    private LocalDateTime postDate;
 
     @ColumnDefault("0")
     @Column(name = "no_like")
@@ -59,12 +60,12 @@ public class Post {
         this.postText = postText;
     }
 
-    public Instant getPostDate() {
+    public @NotNull LocalDateTime getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(Instant postDate) {
-        this.postDate = postDate;
+    public void setPostDate(LocalDateTime localDateTime) {
+        this.postDate = localDateTime;
     }
 
     public Integer getNoLike() {

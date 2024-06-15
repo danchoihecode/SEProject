@@ -11,7 +11,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "report")
 public class Report {
     @Id
-    @ColumnDefault("nextval('report_post_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id", nullable = false)
     private Long id;
 
