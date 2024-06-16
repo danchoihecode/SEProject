@@ -33,7 +33,7 @@ export const SideBar = (props:SideBarProps) => {
     }
 
     return (
-        <Box sx={{width: themeConfig.navigationSize}}>
+        <Box sx={{width: themeConfig.navigationSize, borderColor:'black'}}>
             <TextField
                 fullWidth
                 size='small'

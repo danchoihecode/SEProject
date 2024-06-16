@@ -1,14 +1,10 @@
-'use client'
-import {Button} from "@mui/material";
-import {getSession, signOut} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import {getServerSession} from "next-auth/next";
+import {authOption} from "@/configs/next-auth-config";
+import {Session} from "next-auth";
+import ChattingBox from "@/components/chatting-box";
 
-export default function TestPage(){
-    const router = useRouter();
-    return <div>
-        This test page!!
-        <Button onClick={async () => {
-            await signOut({redirect:false})
-        }}>Sign Out</Button>
-    </div>
+export default async function TestPage() {
+    const session = await getServerSession(authOption as any) as Session;
+
+    return <ChattingBox senderUserId={session.id} conversationId={'f52cd920-df5e-4997-927c-41fc572654f5'}/>
 }

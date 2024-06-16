@@ -25,17 +25,22 @@ export const getConversationList = async ():Promise<Item[]> =>{
         cache:"no-cache" && "no-store"
     })
     if(res.ok){
-        const resData:ConservationData[] = await res.json()
-
-        let data:Item[] = [];
-        for(let item of resData){
-            data.push({conversationName:item.conversationName,
-                isRead:item.isRead,
-                conversationID:item.conversationId,
-                isGroup:item.isGroup
-            })
+        try{
+            const resData:ConservationData[] = await res.json()
+            let data:Item[] = [];
+            for(let item of resData){
+                data.push({conversationName:item.conversationName,
+                    isRead:item.isRead,
+                    conversationID:item.conversationId,
+                    isGroup:item.isGroup
+                })
+            }
+            return data
+        } catch (e){
+            return []
         }
-        return data
+
+
     }
     return []
 }

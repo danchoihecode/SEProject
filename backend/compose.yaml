@@ -36,7 +36,6 @@ services:
       - db
     env_file:
       - .env
-
   db:
     image: 'chatting-db:latest'
     build:
@@ -49,5 +48,4 @@ services:
       - ./postgres-db/postgres-data:/var/lib/postgresql/data
     env_file:
       - .env
-
 
