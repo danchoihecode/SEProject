@@ -30,4 +30,14 @@ public class ConversationMember {
     @Column(name = "has_read", nullable = false)
     private Boolean hasRead = false;
 
+    public ConversationMember(ConversationMemberId key, User member, Conversation conversation, boolean b) {
+        this.id = key;
+        this.user = member;
+        this.conversation = conversation;
+        this.hasRead = b;
+    }
+
+    public ConversationMember() {
+
+    }
 }

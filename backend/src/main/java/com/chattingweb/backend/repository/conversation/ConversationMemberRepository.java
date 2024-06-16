@@ -38,9 +38,8 @@ public interface ConversationMemberRepository extends JpaRepository<Conversation
           "where c.isGroup = true"
   )
   List<ConversationListItem> findAllGroupList(UUID userId);
-}
-public interface ConversationMemberRepository extends
-JpaRepository<ConversationMember, ConversationMemberId> {
+
+
 	@Query("SELECT cm.user FROM ConversationMember cm WHERE cm.id.conversationId = :conversationId")
     List<User> findUsersByConversationId(@Param("conversationId") UUID conversationId);
 

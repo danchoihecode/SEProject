@@ -5,14 +5,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.chattingweb.backend.entities.conversation.Group;
+import com.chattingweb.backend.services.group.CreateGroupRequest;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.chattingweb.backend.entities.response.GroupResponse;
 import com.chattingweb.backend.entities.response.MemberResponse;
@@ -23,9 +22,11 @@ import com.chattingweb.backend.services.MessageService;
 import com.chattingweb.backend.services.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping
+@SecurityRequirement(name = "Authentication")
+@RequestMapping("/")
 public class GroupController {
 	@Autowired
 	private UserService userService;
@@ -144,4 +145,12 @@ public class GroupController {
         }
     }
 
+
+
+	@PostMapping("/groups")
+	public ResponseEntity<Group> createGroup(@RequestParam(name = "groupAvatar", required = false) MultipartFile groupAvatar,
+											 @RequestBody CreateGroupRequest createGroupRequest) {
+		Group createdGroup = groupService.createGroup(groupAvatar, createGroupRequest);
+		return ResponseEntity.ok(createdGroup);
+	}
 }

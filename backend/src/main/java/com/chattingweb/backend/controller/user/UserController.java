@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chattingweb.backend.entities.user.User;
-import com.chattingweb.backend.services.user.UserService;
+import com.chattingweb.backend.services.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 

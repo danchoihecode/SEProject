@@ -24,6 +24,15 @@ public class ConversationMemberId implements Serializable {
     @Column(name = "conversation_id", nullable = false)
     private UUID conversationId;
 
+    public ConversationMemberId(UUID userId, UUID conversationId) {
+        this.userId = userId;
+        this.conversationId = conversationId;
+    }
+
+    public ConversationMemberId() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
