@@ -1,6 +1,8 @@
 package com.chattingweb.backend.services.group;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,15 +66,20 @@ public class GroupService {
         group.setConversation(conversation);
         group.setId(conversation.getId());
         
-        //set owner as a member of conversation
-        ConversationMember ownerMember = new ConversationMember();
-        ConversationMemberId ownerMemberId = new ConversationMemberId();
-        ownerMemberId.setConversationId(conversation.getId());
-        ownerMemberId.setUserId(owner.getId());
-        ownerMember.setId(ownerMemberId);
-        ownerMember.setUser(owner);
-        ownerMember.setConversation(conversation);
-        conversationMemberRepository.save(ownerMember);
+        //set members of group
+        List<UUID> members = createGroupRequest.getSelectedFriendIds();
+        members.add(owner.getId());
+        for (UUID memberId : members) {
+        	ConversationMember conversationMember = new ConversationMember();
+            ConversationMemberId conversationMemberId = new ConversationMemberId();
+            conversationMemberId.setConversationId(group.getId());
+            conversationMemberId.setUserId(memberId);
+            conversationMember.setId(conversationMemberId);
+            conversationMember.setConversation(conversation);
+            User member = userRepository.findById(memberId).orElse(null);
+            conversationMember.setUser(member);
+            conversationMemberRepository.save(conversationMember);
+        }
         
         return groupRepository.save(group);
     }

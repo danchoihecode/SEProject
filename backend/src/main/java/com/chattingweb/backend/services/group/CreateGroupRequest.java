@@ -1,15 +1,13 @@
 package com.chattingweb.backend.services.group;
 
+import java.util.List;
 import java.util.UUID;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CreateGroupRequest {
 	
-	private MultipartFile groupAvatar;
 	private UUID conversationId;
 	@NotBlank
 	@Size(max = 100,message = "Length of group name must be below 100")	
@@ -17,6 +15,9 @@ public class CreateGroupRequest {
 	
 	@NotBlank
 	private UUID ownerId;
+	
+	@NotBlank
+	private List<UUID> selectedFriendIds;
 
 	public String getGroupName() {
 		return groupName;
@@ -24,14 +25,6 @@ public class CreateGroupRequest {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
-	}
-
-	public MultipartFile getGroupAvatar() {
-		return groupAvatar;
-	}
-
-	public void setGroupAvatar(MultipartFile groupAvatar) {
-		this.groupAvatar = groupAvatar;
 	}
 
 	public UUID getConversationId() {
@@ -48,5 +41,13 @@ public class CreateGroupRequest {
 
 	public void setOwnerId(UUID ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	public List<UUID> getSelectedFriendIds() {
+		return selectedFriendIds;
+	}
+
+	public void setSelectedFriendIds(List<UUID> selectedFriendIds) {
+		this.selectedFriendIds = selectedFriendIds;
 	}
 }

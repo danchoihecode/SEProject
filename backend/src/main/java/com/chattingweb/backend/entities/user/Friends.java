@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "friends")
-public class Friend {
+public class Friends {
     @EmbeddedId
     private FriendId id;
 
