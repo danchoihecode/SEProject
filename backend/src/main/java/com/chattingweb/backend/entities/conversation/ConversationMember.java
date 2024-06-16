@@ -3,8 +3,12 @@ package com.chattingweb.backend.entities.conversation;
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "conversation_members")
 public class ConversationMember {
@@ -26,50 +30,14 @@ public class ConversationMember {
     @Column(name = "has_read", nullable = false)
     private Boolean hasRead = false;
 
- 
-
-	public ConversationMember(ConversationMemberId id, User user, Conversation conversation, @NotNull Boolean hasRead) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.conversation = conversation;
-		this.hasRead = hasRead;
-	}
-
-	public ConversationMember() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public ConversationMemberId getId() {
-        return id;
-    }
-
-    public void setId(ConversationMemberId id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Conversation getConversation() {
-        return conversation;
-    }
-
-    public void setConversation(Conversation conversation) {
+    public ConversationMember(ConversationMemberId key, User member, Conversation conversation, boolean b) {
+        this.id = key;
+        this.user = member;
         this.conversation = conversation;
+        this.hasRead = b;
     }
 
-    public Boolean getHasRead() {
-        return hasRead;
-    }
+    public ConversationMember() {
 
-    public void setHasRead(Boolean hasRead) {
-        this.hasRead = hasRead;
     }
-
 }

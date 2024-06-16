@@ -1,15 +1,18 @@
 package com.chattingweb.backend.entities.conversation;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.Hibernate;
+
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.hibernate.Hibernate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
-
+@Getter
+@Setter
 @Embeddable
 public class ConversationMemberId implements Serializable {
     private static final long serialVersionUID = -1330969740317256650L;
@@ -21,32 +24,13 @@ public class ConversationMemberId implements Serializable {
     @Column(name = "conversation_id", nullable = false)
     private UUID conversationId;
 
-    
-
-	public ConversationMemberId(@NotNull UUID userId, @NotNull UUID conversationId) {
-		super();
-		this.userId = userId;
-		this.conversationId = conversationId;
-	}
-
-	public ConversationMemberId() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
+    public ConversationMemberId(UUID userId, UUID conversationId) {
         this.userId = userId;
-    }
-
-    public UUID getConversationId() {
-        return conversationId;
-    }
-
-    public void setConversationId(UUID conversationId) {
         this.conversationId = conversationId;
+    }
+
+    public ConversationMemberId() {
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.chattingweb.backend.configs;
+package com.chattingweb.backend.configs.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login","/auth/signup",
                                 "/swagger-ui.html","/swagger-ui/**",
-                                "/v3/api-docs/**","/v3/api-docs.yaml")
+                                "/v3/api-docs/**","/v3/api-docs.yaml","/ws/**")
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

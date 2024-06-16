@@ -1,4 +1,30 @@
 services:
+
+  zoo-01:
+    image: confluentinc/cp-zookeeper:7.6.1
+    hostname: zoo-01
+    container_name: zoo-01
+    ports:
+      - 22181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  kafka-01:
+    image: confluentinc/cp-kafka:7.6.1
+    hostname: kafka-01
+    container_name: kafka-01
+    depends_on:
+      - zoo-01
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zoo-01:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
   app:
     image: 'chatting-backend:latest'
     build:
@@ -10,7 +36,6 @@ services:
       - db
     env_file:
       - .env
-
   db:
     image: 'chatting-db:latest'
     build:
@@ -23,5 +48,4 @@ services:
       - ./postgres-db/postgres-data:/var/lib/postgresql/data
     env_file:
       - .env
-
 

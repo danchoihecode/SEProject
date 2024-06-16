@@ -7,7 +7,12 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MessageRepository extends JpaRepository<Message, Long> {
+import java.util.Optional;
+import java.util.UUID;
 
-	List<Message> findAllByConversationId(UUID conversationId);
-  }
+public interface MessageRepository extends JpaRepository<Message, Long> {
+  Optional<Message> findFirstByConversation_IdOrderByMessageDateDesc(UUID conversationId);
+
+
+    List<Message> findAllByConversationId(UUID conversationId);
+}

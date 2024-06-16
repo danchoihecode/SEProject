@@ -5,6 +5,8 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@Setter
+@Getter
 @Embeddable
 public class BannedUserId implements Serializable {
     private static final long serialVersionUID = 3196421244974325034L;
@@ -22,22 +26,6 @@ public class BannedUserId implements Serializable {
     @NotNull
     @Column(name = "band_date", nullable = false)
     private Instant bandDate;
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public Instant getBandDate() {
-        return bandDate;
-    }
-
-    public void setBandDate(Instant bandDate) {
-        this.bandDate = bandDate;
-    }
 
     @Override
     public boolean equals(Object o) {
