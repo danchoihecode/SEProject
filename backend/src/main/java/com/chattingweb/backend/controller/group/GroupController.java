@@ -28,7 +28,6 @@ public class GroupController {
     public ResponseEntity<Group> createGroup(@RequestParam(name = "groupAvatar", required = false) MultipartFile groupAvatar, 
     		@RequestBody CreateGroupRequest createGroupRequest) {
     	Group createdGroup = groupService.createGroup(groupAvatar, createGroupRequest);
-        System.out.println(createdGroup);
         return ResponseEntity.ok(createdGroup);
     }
 }
