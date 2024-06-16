@@ -13,7 +13,6 @@ import java.util.UUID;
 public class MessageData {
     private MessageType messageType;
     private String messageContent;
-    private Instant messageDate;
     private UUID senderUserId;
     private UUID conversationId;
     private String sessionId;

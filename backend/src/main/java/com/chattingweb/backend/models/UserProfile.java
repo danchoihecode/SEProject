@@ -1,4 +1,4 @@
-package com.chattingweb.backend.modules;
+package com.chattingweb.backend.models;
 
 import com.chattingweb.backend.entities.post.Post;
 
