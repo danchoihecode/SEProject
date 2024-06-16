@@ -26,7 +26,21 @@ public class ConversationMember {
     @Column(name = "has_read", nullable = false)
     private Boolean hasRead = false;
 
-    public ConversationMemberId getId() {
+ 
+
+	public ConversationMember(ConversationMemberId id, User user, Conversation conversation, @NotNull Boolean hasRead) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.conversation = conversation;
+		this.hasRead = hasRead;
+	}
+
+	public ConversationMember() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ConversationMemberId getId() {
         return id;
     }
 

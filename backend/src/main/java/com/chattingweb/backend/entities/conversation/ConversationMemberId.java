@@ -1,13 +1,14 @@
 package com.chattingweb.backend.entities.conversation;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.Hibernate;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
+
+import org.hibernate.Hibernate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 @Embeddable
 public class ConversationMemberId implements Serializable {
@@ -20,7 +21,19 @@ public class ConversationMemberId implements Serializable {
     @Column(name = "conversation_id", nullable = false)
     private UUID conversationId;
 
-    public UUID getUserId() {
+    
+
+	public ConversationMemberId(@NotNull UUID userId, @NotNull UUID conversationId) {
+		super();
+		this.userId = userId;
+		this.conversationId = conversationId;
+	}
+
+	public ConversationMemberId() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public UUID getUserId() {
         return userId;
     }
 
