@@ -9,9 +9,12 @@ import com.chattingweb.backend.repository.admin.BannedUserRepository;
 import com.chattingweb.backend.repository.admin.DeletedPostRepository;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
+import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.Period;
 
+@Service
 public class AdminService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;

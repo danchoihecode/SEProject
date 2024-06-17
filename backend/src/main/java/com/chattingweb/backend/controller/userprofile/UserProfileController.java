@@ -2,7 +2,7 @@ package com.chattingweb.backend.controller.userprofile;
 
 import com.chattingweb.backend.entities.post.Post;
 import com.chattingweb.backend.entities.user.User;
-import com.chattingweb.backend.modules.UserProfile;
+import com.chattingweb.backend.models.UserProfile;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
 import org.springframework.data.domain.PageRequest;

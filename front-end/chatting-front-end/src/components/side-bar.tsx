@@ -6,20 +6,21 @@ import Divider from "@mui/material/Divider";
 import {InputAdornment, TextField} from "@mui/material";
 import Magnify from "mdi-material-ui/Magnify";
 import ItemList, {Item} from "@/components/item-list";
-import {getConversationList} from "@/server/chatting-data";
 import {ChangeEvent, useState} from "react";
 import {searchFriend} from "@/server/search-friends";
 
 
-export const SideBar = () => {
+interface SideBarProps{
+    chats:Item[]
+}
 
-    const chats:Item[] = getConversationList();
-
+export const SideBar = (props:SideBarProps) => {
+    const {chats} = props
     const [displayChats,setDisplayChats] = useState(chats) ;
 
     const handleSearchInput = async (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.value !== '') {
-            const filedChats = chats.filter(chat => chat.name.includes(event.target.value))
+            const filedChats = chats.filter(chat => chat.conversationName.includes(event.target.value))
             if (filedChats.length !== 0) {
                 setDisplayChats(filedChats)
             } else {
@@ -32,7 +33,7 @@ export const SideBar = () => {
     }
 
     return (
-        <Box sx={{width: themeConfig.navigationSize}}>
+        <Box sx={{width: themeConfig.navigationSize, borderColor:'black'}}>
             <TextField
                 fullWidth
                 size='small'

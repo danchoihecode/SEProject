@@ -3,6 +3,8 @@ package com.chattingweb.backend.entities.post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -10,6 +12,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+@Setter
+@Getter
 @Embeddable
 public class PostReactionId implements Serializable {
     private static final long serialVersionUID = 4075101328203477972L;
@@ -20,22 +24,6 @@ public class PostReactionId implements Serializable {
     @NotNull
     @Column(name = "post_id", nullable = false)
     private Long postId;
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
 
     @Override
     public boolean equals(Object o) {

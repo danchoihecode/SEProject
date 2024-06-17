@@ -1,4 +1,4 @@
-package com.chattingweb.backend.configs;
+package com.chattingweb.backend.configs.auth;
 
 import com.chattingweb.backend.services.JwtService;
 import jakarta.servlet.FilterChain;
