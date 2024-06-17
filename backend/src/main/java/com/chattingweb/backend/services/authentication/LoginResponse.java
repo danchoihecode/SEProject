@@ -1,36 +1,23 @@
 package com.chattingweb.backend.services.authentication;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
 public class LoginResponse {
+    @Setter
     private String token;
 
+    @Setter
     private long expiresIn;
 
     private UUID userId;
-
-    public UUID getUserId() {
-        return userId;
-    }
 
     public LoginResponse setUserId(UUID userId) {
         this.userId = userId;
         return this;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(long expiresIn) {
-        this.expiresIn = expiresIn;
-    }
 }

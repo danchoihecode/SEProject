@@ -1,41 +1,48 @@
-package com.chattingweb.backend.services.user;
+package com.chattingweb.backend.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.chattingweb.backend.entities.conversation.Conversation;
-import com.chattingweb.backend.entities.conversation.Group;
 import com.chattingweb.backend.entities.conversation.ConversationMemberId;
-import com.chattingweb.backend.entities.user.User;
+import com.chattingweb.backend.entities.conversation.Group;
 import com.chattingweb.backend.repository.conversation.ConversationMemberRepository;
 import com.chattingweb.backend.repository.conversation.ConversationRepository;
 import com.chattingweb.backend.repository.conversation.GroupRepository;
+import org.springframework.stereotype.Service;
+
+import com.chattingweb.backend.entities.response.MemberResponse;
+import com.chattingweb.backend.entities.user.User;
 import com.chattingweb.backend.repository.user.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
-	
-	private final UserRepository userRepository;
+
+
+    public Optional<MemberResponse> findMemberByFullName(String fullName) {
+        Optional<User> user = userRepository.findByFullName(fullName);
+        return user.map(u -> new MemberResponse(u.getId(), u.getFullName(), u.getNickName(), u.getAvatar(), u.getEmail()));
+    }
+    private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
     private final GroupRepository groupRepository;
     private final ConversationMemberRepository conversationMemberRepository;
-    
-	public UserService(UserRepository userRepository,
-            ConversationRepository conversationRepository,
-            GroupRepository groupRepository,
-            ConversationMemberRepository conversationMemberRepository) {
+
+    public UserService(UserRepository userRepository,
+                       ConversationRepository conversationRepository,
+                       GroupRepository groupRepository,
+                       ConversationMemberRepository conversationMemberRepository) {
         this.userRepository = userRepository;
         this.conversationRepository = conversationRepository;
         this.groupRepository = groupRepository;
         this.conversationMemberRepository = conversationMemberRepository;
-	}
-	
+    }
+
     public void leaveConversation(UUID userId, UUID conversationId) {
-    	User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow();
         ConversationMemberId conversationMemberId = new ConversationMemberId();
         conversationMemberId.setUserId(userId);
@@ -44,7 +51,7 @@ public class UserService {
     }
 
     public void leaveGroup(UUID userId, UUID groupId, UUID newOwnerId) {
-    	User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
         Group group = groupRepository.findById(groupId).orElseThrow();
         // If user is owner then user have to set new owner for group before leaving
         if (group.getOwner().equals(user)) {
@@ -66,7 +73,7 @@ public class UserService {
         }
         leaveConversation(userId, groupId);
     }
-    
+
     public User updateUserProfile(UUID userId, String fullName, String nickName, MultipartFile avatar) throws IOException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -80,9 +87,10 @@ public class UserService {
 
         return userRepository.save(user);
     }
-    
+
     public List<User> getFriendsList(UUID userId) {
-    	List<User> friends = userRepository.getFriendList(userId);
+        List<User> friends = userRepository.getFriendList(userId);
         return friends;
     }
 }
+

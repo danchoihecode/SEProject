@@ -28,7 +28,7 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
         if(res.ok){
             const resData:SearchData = await res.json()
             let data:Item[] = []
-            data.push({name:resData.nickName,new:false,conversationID:resData.uuid})
+            data.push({conversationName:resData.nickName,isRead:false,conversationID:resData.uuid})
 
             if(data.length > 0){
                 return data
@@ -49,7 +49,7 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
             const resData:SearchData[] = await res.json()
             let data:Item[] = []
             for(let item of resData){
-                data.push({name:item.nickName,new:false,conversationID:item.uuid})
+                data.push({conversationName:item.nickName,isRead:false,conversationID:item.uuid})
             }
             if(data.length > 0){
                 return data

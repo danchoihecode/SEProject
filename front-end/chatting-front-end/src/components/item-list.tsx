@@ -7,9 +7,9 @@ import {SelectedRoomContext} from "@/context/selected-room-context";
 
 export type Item = {
     conversationID:string,
-    name:string,
-    currentMessage?:string,
-    new:boolean
+    conversationName:string,
+    isGroup?:boolean,
+    isRead:boolean
 }
 
 interface ItemListProps{
@@ -21,7 +21,7 @@ const ItemList = (props:ItemListProps) =>{
 
     if(chats.length === 0){
         return <List component='nav'>
-            <Typography variant='h6' justifyContent='center' fullwidth sx={{
+            <Typography variant='h6' justifyContent='center' sx={{
                 display:'flex'
             }}>
                 Not Found!
@@ -44,18 +44,18 @@ const ItemList = (props:ItemListProps) =>{
                     <Avatar alt='tet1' />
                 </ListItemAvatar>
                 <ListItemText sx={{height:45}}>
-                    <Typography sx={chat.new?{fontWeight:'bold'}:null}>
-                        {chat.name.length > maxLength
-                            ? chat.name.slice(0, maxLength) + '...'
-                            : chat.name}
+                    <Typography sx={chat.isRead?{fontWeight:'bold'}:null}>
+                        {chat.conversationName.length > maxLength
+                            ? chat.conversationName.slice(0, maxLength) + '...'
+                            : chat.conversationName}
                     </Typography>
-                    <Typography sx={chat.new?{fontWeight:'bold'}:null} >
-                        {chat.currentMessage?
-                            chat.currentMessage.length > maxLength ? chat.currentMessage.slice(0, maxLength) + '...' : chat.currentMessage
-                            : null}
-                    </Typography>
+                    {/*<Typography sx={chat.isRead?{fontWeight:'bold'}:null} >*/}
+                    {/*    {chat.latestMessage?*/}
+                    {/*        chat.latestMessage.length > maxLength ? chat.latestMessage.slice(0, maxLength) + '...' : chat.latestMessage*/}
+                    {/*        : null}*/}
+                    {/*</Typography>*/}
                 </ListItemText>
-                {chat.new?<Box sx={{
+                {chat.isRead?<Box sx={{
                     bgcolor:'primary.light',
                     borderRadius:'50px',
                     height:'10px',

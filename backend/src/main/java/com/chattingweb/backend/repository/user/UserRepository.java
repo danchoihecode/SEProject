@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	
 	@Query("SELECT f.friend FROM Friends f WHERE f.user.id = :userId")
     List<User> getFriendList(@Param("userId") UUID userId);
+	
+	Optional<User> findByFullName(String fullName);
 }

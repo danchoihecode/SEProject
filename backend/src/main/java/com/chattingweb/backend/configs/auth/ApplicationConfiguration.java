@@ -1,4 +1,4 @@
-package com.chattingweb.backend.configs;
+package com.chattingweb.backend.configs.auth;
 
 import com.chattingweb.backend.repository.user.UserRepository;
 import org.springframework.context.annotation.Bean;

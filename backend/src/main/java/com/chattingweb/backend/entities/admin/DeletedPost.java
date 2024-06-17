@@ -5,8 +5,12 @@ import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "deleted_post")
 public class DeletedPost {
@@ -28,37 +32,5 @@ public class DeletedPost {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id", nullable = false)
     private User admin;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public String getDeleteReason() {
-        return deleteReason;
-    }
-
-    public void setDeleteReason(String deleteReason) {
-        this.deleteReason = deleteReason;
-    }
-
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(User admin) {
-        this.admin = admin;
-    }
 
 }

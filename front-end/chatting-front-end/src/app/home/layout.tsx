@@ -19,7 +19,7 @@ export default async function HomeLayOut({children}: Readonly<{ children: ReactN
             <ContentWrapper
                 className='layout-page-content'
             >
-                <Card fullwidth sx={{height:"91vh"}}>
+                <Card sx={{height:"91vh"}}>
                     {children}
                 </Card>
             </ContentWrapper>
