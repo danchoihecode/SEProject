@@ -2,6 +2,7 @@ package com.chattingweb.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,4 +43,17 @@ public class MessageService {
 		}
 	    return messageDataList;
 	  }
+	public void updateMessage(Long messageId, String content){
+		Optional<Message> message=messageRepository.findById(messageId);
+		if(message.isPresent()){
+			Message mess=message.get();
+			mess.setMessageContent(content);
+			messageRepository.save(mess);
+		} else {
+			throw new IllegalArgumentException("Message not found for ID: " + messageId);
+		}
+	}
+	public void deleteMessage(Long messageId){
+		messageRepository.deleteById(messageId);
+	}
 }
