@@ -2,6 +2,7 @@ package com.chattingweb.backend.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class MessageService {
 		for (Message message : messageRepository.findByConversationIdOrderByMessageDateAsc(conversationId)) {
 			MessageData messageData = MessageData.builder()
 //			          .messageType(MessageType.CONNECT)
-			          .messageContent(message.sgetMessageContent())
+			          .messageContent(message.getMessageContent())
 			          .senderUserId(message.getSender().getId())
 			          .conversationId(conversationId)
 //			          .sessionId(message.getSessionId())
