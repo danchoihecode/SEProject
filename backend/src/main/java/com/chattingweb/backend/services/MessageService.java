@@ -33,7 +33,7 @@ public class MessageService {
 		for (Message message : messageRepository.findByConversationIdOrderByMessageDateAsc(conversationId)) {
 			MessageData messageData = MessageData.builder()
 //			          .messageType(MessageType.CONNECT)
-			          .messageContent(message.getMessageContent())
+			          .messageContent(message.sgetMessageContent())
 			          .senderUserId(message.getSender().getId())
 			          .conversationId(conversationId)
 //			          .sessionId(message.getSessionId())
@@ -42,4 +42,17 @@ public class MessageService {
 		}
 	    return messageDataList;
 	  }
+	public void updateMessage(Long messageId, String content){
+		Optional<Message> message=messageRepository.findById(messageId);
+		if(message.isPresent()){
+			Message mess=message.get();
+			mess.setMessageContent(content);
+			messageRepository.save(mess);
+		} else {
+			throw new IllegalArgumentException("Message not found for ID: " + messageId);
+		}
+	}
+	public void deleteMessage(Long messageId){
+		messageRepository.deleteById(messageId);
+	}
 }
