@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Configuration
@@ -24,19 +25,14 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectEvent event){
         log.info("Received a new web socket connection");
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+        String sessionId = accessor.getSessionId();
+        log.info("Received from {} ",sessionId);
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event){
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        UUID userId = (UUID) headerAccessor.getSessionAttributes().get("userId");
+        log.info("One User Disconnect");
 
-        if(userId != null){
-            log.info("User Disconnect{}", userId);
-            MessageData messageData = new MessageData();
-            messageData.setMessageType(MessageType.DISCONNECT);
-            messageData.setSenderUserId(userId);
-            messagingTemplate.convertAndSend("/topic/public",messageData);
-        }
     }
 }

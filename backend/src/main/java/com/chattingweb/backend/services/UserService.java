@@ -92,5 +92,9 @@ public class UserService {
         List<User> friends = userRepository.getFriendList(userId);
         return friends;
     }
+
+    public User findUserById(UUID userId) {
+        return userRepository.findById(userId).orElseThrow();
+    }
 }
 

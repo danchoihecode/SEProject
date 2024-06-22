@@ -6,7 +6,7 @@ function ChatMessage({key,message, username}) {
     if (message.messageType === 'CONNECT' || message.messageType === 'DISCONNECT') {
         return (
             <Box key={key} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '10px 0'}}>
-                <p style={{color: message.messageType === 'CONNECT' ? 'lime' : 'orangered'}}>{message.senderUserId + " " + message.messageType.toLowerCase() + "ed"}</p>
+                <p style={{color: message.messageType === 'CONNECT' ? 'lime' : 'orangered'}}>{message.senderName + " " + message.messageType.toLowerCase() + "ed"}</p>
             </Box>
         );
     }
@@ -17,7 +17,7 @@ function ChatMessage({key,message, username}) {
             alignItems: message.senderUserId === username ? 'flex-end' : 'flex-start'}}>
             <Box sx={{ marginRight: message.senderUserId === username ? '8px' : 'auto', display: 'flex', flexDirection: message.sender === username ? 'row-reverse' : 'row', alignItems: 'center', gap: 1 }}>
                 <Avatar name={message.senderUserId} size="35" round={true} />
-                <h4>{message.senderUserId}</h4>
+                <h4>{message.senderName}</h4>
             </Box>
             <Box sx={{
                 marginRight: message.senderUserId === username ? '8px' : 'auto',
