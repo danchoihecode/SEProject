@@ -3,7 +3,7 @@ import StartConversation from "@/components/start-conversation";
 import {SideBar} from "@/components/side-bar";
 import {SelectedRoomContextProvider} from "@/context/selected-room-context";
 import {Item} from "@/components/item-list";
-import {getConversationList} from "@/server/chatting-data";
+import {getConversationList, getUserName} from "@/server/chatting-data";
 import {getServerSession} from "next-auth/next";
 import {authOption} from "@/configs/next-auth-config";
 import {Session} from "next-auth";
@@ -13,7 +13,7 @@ import Divider from "@mui/material/Divider";
 export default async function ChatPage(){
     const chats:Item[] = await getConversationList()
     const session = await getServerSession(authOption as any) as Session;
-
+    const name = await getUserName();
     return(
         <Box sx={{display:'flex',height:'100%'}} >
             <SelectedRoomContextProvider>
@@ -21,7 +21,7 @@ export default async function ChatPage(){
                 <Divider orientation="vertical"/>
 
                 {/*<StartConversation onClickStart={() =>{}}/>*/}
-                <ChattingBox senderUserId={session.id} conversationId={'f52cd920-df5e-4997-927c-41fc572654f5'}/>
+                <ChattingBox senderName={name} senderUserId={session.id}/>
             </SelectedRoomContextProvider>
         </Box>
     )

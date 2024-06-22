@@ -1,22 +1,21 @@
 'use client'
-import { useState, useEffect } from 'react';
-import { Client } from '@stomp/stompjs';
+import {useState, useEffect, useContext} from 'react';
 import SockJS from 'sockjs-client/dist/sockjs';
+import { Client } from '@stomp/stompjs';
 import { Button, TextField, Box } from '@mui/material';
 import ChatMessage from "@/components/chat-message";
+import {SelectedRoomContext} from "@/context/selected-room-context";
 
 interface MessageProps {
     senderUserId:string,
-    conversationId:string,
-
+    senderName: string,
 }
-
 
 function ChattingBox(props:MessageProps) {
     const [messages, setMessages] = useState([]);
     const [client, setClient] = useState<Client>(null);
     const [newMessage, setNewMessage] = useState('');
-
+    const {selectedIndex,setSelectedIndex} = useContext(SelectedRoomContext)
 
     useEffect(() => {
         const newClient = new Client({
@@ -24,15 +23,15 @@ function ChattingBox(props:MessageProps) {
             }),
             onConnect: () => {
                 const joinMessage = {
-                    conversationId: props.conversationId,
+                    conversationId: selectedIndex,
                     senderUserId: props.senderUserId,
+                    senderName: props.senderName,
                     messageType: 'CONNECT',
                 };
-                newClient.publish({ destination: '/app/chat/user-adding'
+                newClient.publish({ destination: '/app/message'
                     , body: JSON.stringify(joinMessage)
                 });
-                console.log(joinMessage); // Log the join message
-                newClient.subscribe('/topic/public', message => {
+                newClient.subscribe('/topic/private/' +selectedIndex, message => {
                     const newMessage = JSON.parse(message.body);
                     setMessages(prevMessages => [...prevMessages, newMessage]);
                 });
@@ -40,15 +39,13 @@ function ChattingBox(props:MessageProps) {
             onDisconnect: () => {
                 if (newClient.connected) {
                     const leaveMessage = {
-                        conversationId: props.conversationId,
+                        conversationId: selectedIndex,
                         senderUserId: props.senderUserId,
+                        senderName: props.senderName,
                         messageType: 'DISCONNECT',
                     };
-                    newClient.publish({ destination: '/app/chat/user-adding', body: JSON.stringify(leaveMessage) });
-                    console.log(leaveMessage); // Log the leave message
+                    newClient.publish({ destination: '/app/message', body: JSON.stringify(leaveMessage) });
                 }
-            },
-            onWebSocketClose: () => {
             }
         });
 
@@ -56,21 +53,21 @@ function ChattingBox(props:MessageProps) {
         setClient(newClient);
         //
         return  () => {
-             newClient.deactivate();
+            newClient.deactivate();
         };
-    }, []);
+    }, [selectedIndex]);
 
 
     const sendMessage = () => {
         if (newMessage && client) {
             const chatMessage = {
                 messageType: 'CHAT',
-                conversationId: props.conversationId,
+                conversationId: selectedIndex,
                 senderUserId: props.senderUserId,
+                senderName: props.senderName,
                 messageContent: newMessage,
             };
-            client.publish({ destination: '/app/chat/message-sending', body: JSON.stringify(chatMessage) });
-            console.log(chatMessage);
+            client.publish({ destination: '/app/message', body: JSON.stringify(chatMessage) });
             setNewMessage('')
         }
     };

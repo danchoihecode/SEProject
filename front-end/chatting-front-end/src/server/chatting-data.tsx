@@ -44,3 +44,32 @@ export const getConversationList = async ():Promise<Item[]> =>{
     }
     return []
 }
+
+export const getChatHistory = async ()=>{
+    const session = await getServerSession(authOption as any) as Session
+}
+
+interface User{
+    nickName:string,
+}
+
+export const getUserName = async ()=>{
+    const session = await getServerSession(authOption as any) as Session
+
+    const res = await fetch(process.env.BACK_END_URL +`/users/${session.id}`,{
+        method:'GET',
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${session.access_token}`
+        },
+        cache:"no-cache" && "no-store"
+    })
+    if(res.ok){
+        const data:User = await res.json();
+        console.log(data)
+        if(data) {
+            return data.nickName
+        }
+    }
+    return ''
+}
