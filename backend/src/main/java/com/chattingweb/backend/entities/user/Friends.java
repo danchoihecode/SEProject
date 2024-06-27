@@ -1,6 +1,7 @@
 package com.chattingweb.backend.entities.user;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "friends")
@@ -17,6 +18,18 @@ public class Friends {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "friend_id", nullable = false)
     private User friend;
+
+    @ColumnDefault("false")
+    @Column(name = "accepted")
+    private boolean accepted;
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
 
     public FriendId getId() {
         return id;
