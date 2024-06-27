@@ -28,7 +28,12 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
         if(res.ok){
             const resData:SearchData = await res.json()
             let data:Item[] = []
-            data.push({conversationName:resData.nickName,isRead:false,conversationID:resData.uuid})
+            data.push({
+                conversationName:resData.nickName,
+                isRead:false,
+                conversationID:resData.uuid,
+                isFriend:false
+            })
 
             if(data.length > 0){
                 return data
@@ -49,9 +54,15 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
             const resData:SearchData[] = await res.json()
             let data:Item[] = []
             for(let item of resData){
-                data.push({conversationName:item.nickName,isRead:false,conversationID:item.uuid})
+                data.push({
+                    conversationName:item.nickName,
+                    isRead:false,
+                    conversationID:item.uuid,
+                    isFriend:false
+                })
             }
             if(data.length > 0){
+                console.log(data)
                 return data
             }
         }

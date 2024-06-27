@@ -54,6 +54,7 @@ function ChattingBox(props:MessageProps) {
         //
         return  () => {
             newClient.deactivate();
+            setMessages([])
         };
     }, [selectedIndex]);
 

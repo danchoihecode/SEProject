@@ -2,7 +2,6 @@ import {getServerSession} from "next-auth/next";
 import {authOption} from "@/configs/next-auth-config";
 import {Session} from "next-auth";
 import ChattingBox from "@/components/chatting-box";
-import AddFriendButton from "@/components/add-friend-button";
 import Box from "@mui/material/Box";
 import {SelectedRoomContextProvider} from "@/context/selected-room-context";
 import {SideBar} from "@/components/side-bar";

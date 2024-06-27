@@ -74,7 +74,6 @@ public class MessageService {
 						.build();
 				messageDataList.add(messageData);
 			}
-
 		}
 	    return messageDataList;
 	  }

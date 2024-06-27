@@ -23,24 +23,31 @@ export const getConversationList = async ():Promise<Item[]> =>{
             Authorization:`Bearer ${session.access_token}`
         },
         cache:"no-cache" && "no-store"
-    })
-    if(res.ok){
-        try{
-            const resData:ConservationData[] = await res.json()
-            let data:Item[] = [];
-            for(let item of resData){
-                data.push({conversationName:item.conversationName,
-                    isRead:item.isRead,
-                    conversationID:item.conversationId,
-                    isGroup:item.isGroup
-                })
-            }
-            return data
-        } catch (e){
-            return []
+    }).then((response:Response) => {
+        if(response.ok){
+            return response.json()
+        }else{
+            return null
         }
-
-
+    }).then(
+        data =>{
+            if(data){
+                const resData:ConservationData[]= data
+                let dataR:Item[] = [];
+                for(let item of resData){
+                    dataR.push({conversationName:item.conversationName,
+                        isRead:item.isRead,
+                        conversationID:item.conversationId,
+                        isGroup:item.isGroup,
+                        isFriend:true
+                    })
+                }
+                return dataR
+            }
+        }
+    )
+    if(res){
+        return res
     }
     return []
 }
@@ -65,11 +72,15 @@ export const getUserName = async ()=>{
         cache:"no-cache" && "no-store"
     })
     if(res.ok){
-        const data:User = await res.json();
-        console.log(data)
-        if(data) {
-            return data.nickName
+        try {
+            const data:User = await res.json();
+            if(data) {
+                return data.nickName
+            }
+        }catch (e){
+            return ''
         }
+
     }
     return ''
 }
