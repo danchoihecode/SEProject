@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
    @Query(value = "Select u from User u Where u.is_Admin=TRUE",nativeQuery = true)
    public  Optional<User> findAdmin();
 	
-	@Query("SELECT f.friend FROM Friends f WHERE f.user.id = :userId")
+	@Query("SELECT f.friend FROM Friends as f WHERE f.user.id = :userId and f.accepted= true ")
     List<User> getFriendList(@Param("userId") UUID userId);
 	
 	Optional<User> findByFullName(String fullName);
