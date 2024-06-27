@@ -1,9 +1,10 @@
 'use client'
-import {List, ListItemAvatar, ListItemButton, ListItemText, Typography} from "@mui/material";
+import {Button, List, ListItemAvatar, ListItemButton, ListItemText, Typography} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {SelectedRoomContext} from "@/context/selected-room-context";
+import AddFriendButton from "@/components/add-friend-button";
 
 export type Item = {
     conversationID:string,
@@ -17,7 +18,7 @@ interface ItemListProps{
 }
 const ItemList = (props:ItemListProps) =>{
     const {chats} = props;
-    const maxLength = 20
+    const maxLength = 20 ;
 
     if(chats.length === 0){
         return <List component='nav'>
@@ -32,6 +33,14 @@ const ItemList = (props:ItemListProps) =>{
     const {selectedIndex,setSelectedIndex} = useContext(SelectedRoomContext)
 
     const listItems = chats.map(chat => {
+        // need to modify isAdded API ?
+        // need to modify isFriend API ?
+
+        const [isAdded, setIsAdded] = useState(false);
+        const [isFriend, setIsFriend] = useState(false);
+        const onAddFriend = () => {
+            setIsAdded(true);
+        };
         return (
             <ListItemButton
                 key={chat.conversationID}
@@ -60,7 +69,9 @@ const ItemList = (props:ItemListProps) =>{
                     borderRadius:'50px',
                     height:'10px',
                     width:'10px'}}/>:null}
+                <AddFriendButton isFriend={isFriend} isAdded = {isAdded} onAddFriend={onAddFriend}/>
             </ListItemButton>
+
         )
     })
     return (
