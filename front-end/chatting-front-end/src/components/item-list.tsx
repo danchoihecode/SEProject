@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import React, {useContext, useState} from "react";
 import {SelectedRoomContext} from "@/context/selected-room-context";
 import AddFriendButton from "@/components/add-friend-button";
+import AccountAvatar from "@/components/letter-avatar";
 
 export type Item = {
     conversationID:string,
@@ -42,7 +43,7 @@ const ItemList = (props:ItemListProps) =>{
                 sx={{borderRadius:'5px',mb:'5px'}}
             >
                 <ListItemAvatar>
-                    <Avatar alt='tet1' />
+                    <AccountAvatar name={chat.conversationName}/>
                 </ListItemAvatar>
                 <ListItemText sx={{height:45}}>
                     <Typography sx={chat.isRead?{fontWeight:'bold'}:null}>
@@ -63,7 +64,7 @@ const ItemList = (props:ItemListProps) =>{
                 onClick={()=>setSelectedIndex(chat.conversationID)}
             >
                 <ListItemAvatar>
-                    <Avatar alt='tet1' />
+                    <AccountAvatar name={chat.conversationName}/>
                 </ListItemAvatar>
                 <ListItemText sx={{height:45}}>
                     <Typography sx={chat.isRead?{fontWeight:'bold'}:null}>

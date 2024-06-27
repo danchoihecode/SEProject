@@ -20,6 +20,7 @@ import CogOutline from 'mdi-material-ui/CogOutline'
 
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
+import AccountAvatar from "@/components/letter-avatar";
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -96,7 +97,7 @@ const UserDropdown = (props:Props) => {
                             badgeContent={<BadgeContentSpan />}
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         >
-                            <Avatar alt='John Doe' sx={{ width: '2.5rem', height: '2.5rem' }} />
+                            <AccountAvatar name={props.name}/>
                         </Badge>
                         <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
                             <Typography sx={{ fontWeight: 600 }}>{props.name}</Typography>
