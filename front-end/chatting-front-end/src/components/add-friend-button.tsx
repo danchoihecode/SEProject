@@ -1,16 +1,18 @@
 'use client'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {Item} from "@/components/item-list";
+import {useState} from "react";
+import {IconButton} from "@mui/material";
 interface buttonInfo{
     isFriend :boolean;
-    isAdded :boolean;
-    onAddFriend: () => void;
 }
 const AddFriendButton = (props : buttonInfo ) => {
-    const { onAddFriend ,isFriend, isAdded } = props;
+    const {isFriend } = props;
+    const [flag, setFlag] = useState(isFriend);
 
     const handleClick = () => {
-        onAddFriend();
+        console.log(isFriend);
+        setFlag(true);
     };
 
     if (isFriend) {
@@ -18,13 +20,15 @@ const AddFriendButton = (props : buttonInfo ) => {
     }
 
     return (
-        <PersonAddIcon
-            onClick={handleClick}
-            sx={{
-                opacity: isAdded ? 0.5 : 1, // Fade effect when isAdded is true
-                cursor: isAdded ? 'not-allowed' : 'pointer', // Disable cursor if isAdded is true
-            }}
-        />
+        <IconButton>
+            <PersonAddIcon
+                onClick={handleClick}
+                sx={{
+                    display: flag ? 'none':'flex',
+                }}
+            />
+        </IconButton>
+
     );
 }
 

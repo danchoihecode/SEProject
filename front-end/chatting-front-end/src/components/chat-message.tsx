@@ -1,6 +1,8 @@
 'use client'
-import { Box } from '@mui/material';
+import {Box, ListItemAvatar} from '@mui/material';
 import Avatar from "@mui/material/Avatar";
+import AccountAvatar from "@/components/letter-avatar";
+import React from "react";
 
 function ChatMessage({key,message, username}) {
     if (message.messageType === 'CONNECT' || message.messageType === 'DISCONNECT') {
@@ -16,7 +18,7 @@ function ChatMessage({key,message, username}) {
             flexDirection: 'column',
             alignItems: message.senderUserId === username ? 'flex-end' : 'flex-start'}}>
             <Box sx={{ marginRight: message.senderUserId === username ? '8px' : 'auto', display: 'flex', flexDirection: message.sender === username ? 'row-reverse' : 'row', alignItems: 'center', gap: 1 }}>
-                <Avatar name={message.senderUserId} size="35" round={true} />
+                <AccountAvatar name={message.senderName}/>
                 <h4>{message.senderName}</h4>
             </Box>
             <Box sx={{
