@@ -3,19 +3,21 @@ package com.chattingweb.backend.entities.conversation;
 import com.chattingweb.backend.entities.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
 @Setter
 @Getter
+@Builder
 @Entity
 @Table(name = "message")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
     @Id
-    @ColumnDefault("nextval('message_message_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id", nullable = false)
     private Long id;
 

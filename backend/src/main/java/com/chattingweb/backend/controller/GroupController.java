@@ -18,7 +18,7 @@ import com.chattingweb.backend.entities.response.MemberResponse;
 import com.chattingweb.backend.entities.response.MessageDTO;
 import com.chattingweb.backend.services.ConversationMemberService;
 import com.chattingweb.backend.services.GroupService;
-import com.chattingweb.backend.services.MessageService;
+import com.chattingweb.backend.services.messaging.MessageService;
 import com.chattingweb.backend.services.UserService;
 
 import jakarta.persistence.EntityNotFoundException;

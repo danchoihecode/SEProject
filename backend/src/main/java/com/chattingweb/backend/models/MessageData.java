@@ -15,5 +15,5 @@ public class MessageData {
     private String messageContent;
     private UUID senderUserId;
     private UUID conversationId;
-    private String sessionId;
+    private String senderName;
 }
