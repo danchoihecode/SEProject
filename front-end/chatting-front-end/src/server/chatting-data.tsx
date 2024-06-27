@@ -13,9 +13,8 @@ interface ConservationData{
 }
 
 export const getConversationList = async ():Promise<Item[]> =>{
-
+    'use server'
     const session = await getServerSession(authOption as any) as Session
-
     const res = await fetch(process.env.BACK_END_URL +`/conversations/list?user-id=${session.id}`,{
         method:'GET',
         headers:{
@@ -61,6 +60,8 @@ interface User{
 }
 
 export const getUserName = async ()=>{
+    'use server'
+
     const session = await getServerSession(authOption as any) as Session
 
     const res = await fetch(process.env.BACK_END_URL +`/users/${session.id}`,{

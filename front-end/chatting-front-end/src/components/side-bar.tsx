@@ -24,6 +24,7 @@ export const SideBar = (props:SideBarProps) => {
             if (filedChats.length !== 0) {
                 setDisplayChats(filedChats)
             } else {
+                'use server'
                 const peopleFounded: Item[] = await searchFriend(event.target.value)
                 setDisplayChats(peopleFounded)
             }
