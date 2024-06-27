@@ -30,6 +30,12 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable("userId") UUID userId) {
+        User user =  userService.findUserById(userId);
+        return ResponseEntity.ok(user);
+    }
+
     // Leave conversation
     @PostMapping("/{userId}/conversations/{conversationId}/leave")
     public ResponseEntity<String> leaveConversation(
