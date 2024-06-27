@@ -7,8 +7,10 @@ import themeConfig from "@/configs/themeConfig";
 import {Typography} from "@mui/material";
 import NotificationButton from "@/components/notification-button";
 
-
-export const TopNav = () => {
+interface Props{
+    name:string
+}
+export const TopNav = (props:Props) => {
     // API to addFriend when accept
 
     const handleAccept = (id: string) => {
@@ -48,7 +50,7 @@ export const TopNav = () => {
                     onReject={handleReject}
                 />
                 <ModeToggle/>
-                <UserDropdown />
+                <UserDropdown name={props.name} />
             </Box>
         </Box>
     )

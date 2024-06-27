@@ -30,7 +30,11 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
 }))
 
-const UserDropdown = () => {
+interface Props{
+    name: string
+}
+
+const UserDropdown = (props:Props) => {
     // ** States
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
 
@@ -95,9 +99,9 @@ const UserDropdown = () => {
                             <Avatar alt='John Doe' sx={{ width: '2.5rem', height: '2.5rem' }} />
                         </Badge>
                         <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-                            <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
+                            <Typography sx={{ fontWeight: 600 }}>{props.name}</Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                                Admin
+                                Normal User
                             </Typography>
                         </Box>
                     </Box>

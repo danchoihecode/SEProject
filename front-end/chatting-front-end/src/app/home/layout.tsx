@@ -7,15 +7,17 @@ import Box from "@mui/material/Box";
 import {TopNav} from "@/layouts/top-nav";
 import ContentWrapper from "@/layouts/components/content-wrapper";
 import {Card} from "@mui/material";
+import {getUserName} from "@/server/chatting-data";
 
 export default async function HomeLayOut({children}: Readonly<{ children: ReactNode; }>) {
     const session = await getServerSession(authOption as any) as Session;
     if(!session || !session.access_token) {
         redirect("/auth/login");
     }
+    const name = await getUserName()
     return(
         <Box sx={{p:'10px'}}>
-            <TopNav/>
+            <TopNav name={name}/>
             <ContentWrapper
                 className='layout-page-content'
             >
