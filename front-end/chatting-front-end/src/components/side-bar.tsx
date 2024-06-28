@@ -10,41 +10,35 @@ import {ChangeEvent, Key, useState} from "react";
 import {searchFriend} from "@/server/search-friends";
 import AddGroupButton from "./add-group-button";
 import GroupPopUp from "./group-pop-up";
+import {createGroup} from "@/server/add-group";
+import {useRouter} from "next/navigation";
 
 
 interface SideBarProps{
-    chats:Item[]
+    chats:Item[],
+    listFriends:Friend[]
 }
 
 export type Friend = {
-    id: Key;
-    name: String;
+    id: string;
+    name: string;
 };
 
 export const SideBar = (props:SideBarProps) => {
 
     const {chats} = props;
     const [showAddGroupForm, setShowAddGroupForm] = useState(false);
+    const router = useRouter();
 
-
-    const listFriends: Friend[] = [
-        { id: '1', name: 'John Doe' },
-        { id: '2', name: 'Jane Smith' },
-        // Add more friends here
-    ];
     const handleCreateGroup = (groupName: string, members: Friend[]) => {
-        // Create a new chat item for the group
-        const newChat: Item = {
-            conversationName: groupName,
-            conversationID: String(displayChats.length + 10),
-            isRead: false,
-            isGroup :true,
-            isFriend : false,
-        };
-
-        // Update the chats and displayChats states
-        setDisplayChats((prevDisplayChats) => [...prevDisplayChats, newChat]);
-        console.log('New group created:', groupName ,members);
+        createGroup({groupName:groupName,Ids:members}).then(
+            r =>{
+                if (r){
+                    console.log('New group created:', groupName ,members);
+                    router.refresh()
+                }
+            }
+        )
     };
 
     const [displayChats,setDisplayChats] = useState(chats) ;
@@ -70,10 +64,10 @@ export const SideBar = (props:SideBarProps) => {
 
     return (
         <Box sx={{width: themeConfig.navigationSize, borderColor:'black'}}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '5px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', p: '5px' }}>
                 <TextField
                     size='small'
-                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 }, width: '70%' }}
+                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 }, width: '80%' }}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position='start'>
@@ -83,13 +77,13 @@ export const SideBar = (props:SideBarProps) => {
                     }}
                     onChange={handleSearchInput}
                 />
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center',width:'20%',justifyContent:'center' }}>
                        <AddGroupButton handleAddGroupClick={handleAddGroupClick} />
                 </Box>
             </Box>
             <Divider/>
             <ItemList chats={displayChats}/>
-            <GroupPopUp handleCreateGroup={handleCreateGroup} handleCloseForm = {handleCloseForm} listFriends={listFriends} showAddGroupForm={showAddGroupForm} />
+            <GroupPopUp  handleCreateGroup={handleCreateGroup} handleCloseForm = {handleCloseForm} listFriends={props.listFriends} showAddGroupForm={showAddGroupForm} />
         </Box>
     )
 }

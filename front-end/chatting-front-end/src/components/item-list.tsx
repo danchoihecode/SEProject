@@ -23,12 +23,6 @@ const ItemList = (props: ItemListProps) => {
     const { chats } = props;
     const maxLength = 20;
     const router = useRouter();
-    useEffect(() => {
-        const interval = setInterval(() => {
-           router.refresh()
-        }, 20000); //set your time here. repeat every 5 seconds
-        return () => clearInterval(interval);
-    }, []);
     if (chats.length === 0) {
         return (
             <List component='nav'>

@@ -52,7 +52,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({
             />
             <Box>
                 <Typography variant="h6" gutterBottom>
-                    Add Friends
+                    Choose People
                 </Typography>
                 {listFriends.map((friend) => (
                     <Box

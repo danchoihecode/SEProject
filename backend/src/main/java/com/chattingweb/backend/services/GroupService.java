@@ -82,7 +82,7 @@ public class GroupService {
 		this.groupRepository = groupRepository;
 	}
 
-	public Group createGroup(MultipartFile groupAvatar, CreateGroupRequest createGroupRequest) {
+	public Group createGroup( CreateGroupRequest createGroupRequest) {
 		Group group = new Group();
 
 		//set group name
@@ -95,15 +95,6 @@ public class GroupService {
 		}
 		group.setOwner(owner);
 
-		//set group avatar
-		if (groupAvatar != null) {
-			try {
-				group.setGroupAvatar(groupAvatar.getBytes());
-			} catch (IOException e) {
-				System.out.println(e);
-				throw new RuntimeException("Error processing group avatar", e);
-			}
-		}
 
 		//create new conversation
 		Conversation conversation = new Conversation();

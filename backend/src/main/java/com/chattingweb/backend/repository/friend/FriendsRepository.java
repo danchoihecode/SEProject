@@ -18,4 +18,6 @@ public interface FriendsRepository extends JpaRepository<Friends, FriendId> {
 
     @Query("SELECT f.user FROM Friends as f WHERE f.friend.id = :userId and f.accepted= false ")
     List<User> getFriendRequestList(@Param("userId") UUID userId);
+
+    List<Friends> findAllById_UserIdAndAcceptedTrue(UUID userId);
 }

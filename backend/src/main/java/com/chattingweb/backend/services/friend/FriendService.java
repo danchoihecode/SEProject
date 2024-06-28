@@ -6,6 +6,7 @@ import com.chattingweb.backend.entities.conversation.ConversationMemberId;
 import com.chattingweb.backend.entities.user.FriendId;
 import com.chattingweb.backend.entities.user.Friends;
 import com.chattingweb.backend.entities.user.User;
+import com.chattingweb.backend.models.FriendItem;
 import com.chattingweb.backend.repository.conversation.ConversationMemberRepository;
 import com.chattingweb.backend.repository.conversation.ConversationRepository;
 import com.chattingweb.backend.repository.friend.FriendsRepository;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -100,5 +102,20 @@ public class FriendService {
             else return 1;
         }
         else return 0;
+    }
+
+    public List<FriendItem> listFriend(UUID userId){
+        List<Friends> friendsList = friendsRepository.findAllById_UserIdAndAcceptedTrue(userId);
+        List<FriendItem> friendItemList=new ArrayList<>();
+        if (!friendsList.isEmpty()) {
+            for (Friends friends : friendsList) {
+                Optional<User> optional = userRepository.findById(friends.getId().getFriendId());
+                if (optional.isPresent()) {
+                    User user = optional.get();
+                    friendItemList.add(new FriendItem(user.getId(), user.getNickName()));
+                }
+            }
+        }
+        return friendItemList;
     }
 }
