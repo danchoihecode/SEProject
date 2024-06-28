@@ -31,6 +31,7 @@ const GroupPopUp: React.FC<GroupPopUpProps> = ({
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     bgcolor: 'background.paper',
+                    width:'500px',
                     boxShadow: 24,
                     p: 4,
                 }}

@@ -2,6 +2,7 @@ package com.chattingweb.backend.controller.friends;
 
 import com.chattingweb.backend.entities.user.Friends;
 import com.chattingweb.backend.entities.user.User;
+import com.chattingweb.backend.models.FriendItem;
 import com.chattingweb.backend.services.friend.FriendService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +50,14 @@ public class FriendController {
         return ResponseEntity.ok(friendService.checkFriend(userId,friendId));
     }
 
-
+    @GetMapping("/list/{userId}")
+    public ResponseEntity<List<FriendItem>> getFriends(
+            @PathVariable UUID userId){
+        List<FriendItem> data = friendService.listFriend(userId);
+        if(data.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else {
+            return ResponseEntity.ok(data);
+        }
+    }
 }
