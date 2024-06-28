@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import "./globals.css";
 import {SettingsConsumer, SettingsProvider} from "@/context/settingsContext";
 import {AppRouterCacheProvider} from "@mui/material-nextjs/v13-appRouter";
 import {ReactNode} from "react";

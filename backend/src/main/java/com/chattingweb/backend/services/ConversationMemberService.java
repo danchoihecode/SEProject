@@ -54,7 +54,7 @@ public class ConversationMemberService {
 		conversationMemberRepository.deleteById(key);
 	}
 	public List<MemberResponse> getAllMembers(UUID conversationId) {
-        List<User> users = conversationMemberRepository.findAllByConversationId(conversationId);
+        List<User> users = conversationMemberRepository.findUsersByConversationId(conversationId);
         return users.stream()
                 .map(user -> new MemberResponse(user.getId(), user.getFullName(), user.getNickName(), user.getAvatar(), user.getEmail()))
                 .collect(Collectors.toList());

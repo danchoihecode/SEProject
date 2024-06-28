@@ -44,4 +44,6 @@ public interface ConversationMemberRepository extends JpaRepository<Conversation
     List<User> findUsersByConversationId(@Param("conversationId") UUID conversationId);
 
 	List<User> findAllByConversationId(UUID conversationId);
+
+	void deleteByConversationId(UUID conversationId);
   }
