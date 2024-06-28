@@ -1,47 +1,39 @@
+'use client'
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { blue} from '@mui/material/colors';
-import PersonIcon from '@mui/icons-material/Person';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-
-interface FriendRequest {
+import AccountAvatar from "@/components/letter-avatar";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import {IconButton} from "@mui/material";
+export interface FriendRequest {
     name: string;
     id: string;
 }
 
 interface NotificationButtonProps {
-    friendRequests: FriendRequest[];
-    onAccept: (id: string) => void;
-    onReject: (id: string) => void;
+    friendRequests: FriendRequest[]
 }
 
-const NotificationButton: React.FC<NotificationButtonProps> = ({
-                                                                   friendRequests,
-                                                                   onAccept,
-                                                                   onReject,
-                                                               }) => {
+const NotificationButton: React.FC<NotificationButtonProps> = (props :NotificationButtonProps) => {
     const [open, setOpen] = useState(false);
-    const [requests, setRequests] = useState<FriendRequest[]>(friendRequests);
+    const [requests, setRequests] = useState<FriendRequest[]>(props.friendRequests);
 
     const handleClick = () => {
         setOpen(true);
     };
 
     const handleAccept = (id: string) => {
-        onAccept(id);
         setRequests(requests.filter((request) => request.id !== id));
         setOpen(false);
     };
 
     const handleReject = (id: string) => {
-        onReject(id);
         setRequests(requests.filter((request) => request.id !== id));
         setOpen(false);
     };
@@ -52,9 +44,9 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClick}>
-                Notifications ({requests.length})
-            </Button>
+            <IconButton color='inherit' onClick={handleClick}>
+                <NotificationsIcon/> {requests.length}
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Friend Requests</DialogTitle>
                 <DialogContent>
@@ -67,15 +59,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
                                 marginBottom: '16px',
                             }}
                         >
-                            <Avatar
-                                sx={{
-                                    backgroundColor: blue[500],
-                                    color: 'white',
-                                    marginRight: '16px',
-                                }}
-                            >
-                                <PersonIcon />
-                            </Avatar>
+                            <AccountAvatar name={request.name}  />
                             <div>
                                 <Typography variant="h6" fontWeight="bold">
                                     {request.name}

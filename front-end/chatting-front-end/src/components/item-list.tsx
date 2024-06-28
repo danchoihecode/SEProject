@@ -60,7 +60,7 @@ const ItemList = (props: ItemListProps) => {
                             : chat.conversationName}
                     </Typography>
                 </ListItemText>
-                <AddFriendButton isFriend={chat.isFriend} />
+                <AddFriendButton isFriend={chat.isFriend} id={chat.conversationID}/>
             </ListItem>
         }
         return (

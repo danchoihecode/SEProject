@@ -25,6 +25,7 @@ public class FriendController {
     @PostMapping("/add_friend/{userId}/{friendId}")
     public ResponseEntity<Friends> addFriend(@PathVariable UUID userId,
                                              @PathVariable UUID friendId){
+        log.info("Adding friend {} to user {}", friendId, userId);
         friendService.addFriend(userId,friendId);
         return ResponseEntity.ok().build();
     }
@@ -32,10 +33,12 @@ public class FriendController {
     public ResponseEntity<Friends> acceptFriend(@PathVariable UUID userId,
                                              @PathVariable UUID friendId){
         friendService.acceptFriend(userId,friendId);
+        log.info("Accepting friend {} to user {}", friendId, userId);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/friend_request_list/{userId}")
     public ResponseEntity<List<User>> friendRequestList(@PathVariable UUID userId){
+        log.info("Getting friend request list for user {}", userId);
         return  ResponseEntity.ok(friendService.getFriendRequestList(userId));
     }
 

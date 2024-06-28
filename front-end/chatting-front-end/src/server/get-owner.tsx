@@ -2,6 +2,7 @@
 import {getServerSession} from "next-auth/next";
 import {authOption} from "@/configs/next-auth-config";
 import {Session} from "next-auth";
+import {redirect} from "next/navigation";
 
 
 export const getOwnerId = async (conversationId: string): Promise<string> => {
@@ -21,7 +22,7 @@ export const getOwnerId = async (conversationId: string): Promise<string> => {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch owner. Status: ${response.status}`);
+            redirect("/home/chat")
         } else {
             const data: string = await response.text(); 
             return data;

@@ -14,6 +14,7 @@ function ChatMessage({key,message, username}) {
     }
     return (
         <Box key={key} sx={{
+            p:'8px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: message.senderUserId === username ? 'flex-end' : 'flex-start'}}>
@@ -22,17 +23,18 @@ function ChatMessage({key,message, username}) {
                 <h4>{message.senderName}</h4>
             </Box>
             <Box sx={{
+                marginTop:'8px',
                 marginRight: message.senderUserId === username ? '8px' : 'auto',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 maxWidth: '60%',
-                height: '16px',
+                minWidth:'50px',
+                height: '40px',
                 padding: '10px',
-                borderRadius: '16px',
+                borderRadius: '25px',
                 color:'white',
-                backgroundColor:'secondary.main',
-                wordWrap: 'break-word',
+                backgroundColor:'message'
             }}>
                 <p>{message.messageContent}</p>
             </Box>

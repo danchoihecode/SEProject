@@ -5,14 +5,18 @@ import {useState} from "react";
 import {IconButton} from "@mui/material";
 interface buttonInfo{
     isFriend :boolean;
+    id:string
 }
 const AddFriendButton = (props : buttonInfo ) => {
     const {isFriend } = props;
     const [flag, setFlag] = useState(isFriend);
 
     const handleClick = () => {
-        console.log(isFriend);
-        setFlag(true);
+        handleAddFriend({id:props.id}).then(
+            r => {
+                if(r) setFlag(true);
+            }
+    )
     };
 
     if (isFriend) {

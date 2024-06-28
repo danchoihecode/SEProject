@@ -97,6 +97,7 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
       paper: mode === 'light' ? '#FFF' : '#312D4B',
       default: mode === 'light' ? '#F4F5FA' : '#28243D'
     },
+    message:'#1AA0D9',
     action: {
       active: `rgba(${mainColor}, 0.54)`,
       hover: mode === 'light'?'#d2f5ea':'#b700ff',
