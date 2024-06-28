@@ -5,10 +5,9 @@ import { Client } from '@stomp/stompjs';
 import { Button, TextField, Box } from '@mui/material';
 import ChatMessage from "@/components/chat-message";
 import {SelectedRoomContext} from "@/context/selected-room-context";
-import HistoryMessage from "@/components/history-message";
 import StartConversation from "@/components/start-conversation";
 
-import {QueryClient,QueryClientProvider} from "@tanstack/react-query";
+import {getMessageHistory} from "@/server/history";
 
 interface MessageProps {
     senderUserId:string,
@@ -16,14 +15,34 @@ interface MessageProps {
     token:string
 }
 
+export interface MessageHistory {
+    messageType:string,
+    messageContent:string,
+    senderUserId:string,
+    conversationId:string,
+    senderName:string
+}
+
 function ChattingBox(props:MessageProps) {
 
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<MessageHistory[]>([]);
     const [client, setClient] = useState<Client>(null);
     const [newMessage, setNewMessage] = useState('');
     const {selectedIndex,setSelectedIndex} = useContext(SelectedRoomContext)
     const messagesEndRef = useRef<HTMLDivElement|null>(null);
 
+    useEffect(() => {
+        if(selectedIndex !== '0'){
+            getMessageHistory({conservationId:selectedIndex}).then(
+                r =>{
+                    console.log(r)
+                    if(r){
+                        setMessages(r)
+                    }
+                }
+            )
+        }
+    }, [selectedIndex]);
 
     useEffect(() => {
         const newClient = new Client({
@@ -96,17 +115,11 @@ function ChattingBox(props:MessageProps) {
     if(selectedIndex === '0')
         return <StartConversation onClickStart={()=>{}}/>
 
-    const queryClient = new QueryClient()
 
     return (
         <Box sx={{width: '100%', margin: '2.5%'}}>
             <Box display="flex" flexDirection="column" justifyContent="center" >
                 <Box sx={{height: '75.5vh', overflow: 'auto', width: '100%'}}>
-                    {selectedIndex !== '0' ?
-                        <QueryClientProvider client={queryClient}>
-                            <HistoryMessage conversationId={selectedIndex} token={props.token} senderUserId={props.senderUserId}/>
-                        </QueryClientProvider>
-                        : null}
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} username={props.senderUserId}/>
                     ))}
