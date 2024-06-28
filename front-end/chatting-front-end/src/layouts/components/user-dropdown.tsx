@@ -21,6 +21,7 @@ import CogOutline from 'mdi-material-ui/CogOutline'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import AccountAvatar from "@/components/letter-avatar";
+import {signOut} from "next-auth/react";
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -49,7 +50,9 @@ const UserDropdown = (props:Props) => {
     const handleDropdownClose = (url?: string) => {
         localStorage.clear();
         if (url) {
-         router.push(url)
+            signOut({redirect:false})
+            router.push(url)
+            router.refresh()
         }
         setAnchorEl(null)
     }

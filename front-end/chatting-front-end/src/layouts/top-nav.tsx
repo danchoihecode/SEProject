@@ -5,6 +5,7 @@ import Image from "next/image";
 import themeConfig from "@/configs/themeConfig";
 import {Typography} from "@mui/material";
 import NotificationButton, {FriendRequest} from "@/components/notification-button";
+import {listAddFriendRequest} from "@/server/friend-request";
 
 interface Props{
     name:string
@@ -12,7 +13,8 @@ interface Props{
 export const TopNav = async (props:Props) => {
     // API to addFriend when accept
 
-    const data: FriendRequest[] = [];
+    const data: FriendRequest[] = await listAddFriendRequest();
+
 
     return(
         <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>

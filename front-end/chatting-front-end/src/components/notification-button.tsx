@@ -11,6 +11,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import AccountAvatar from "@/components/letter-avatar";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {IconButton} from "@mui/material";
+import Box from "@mui/material/Box";
+import {acceptFriendRequest} from "@/server/friend-request";
+import {useRouter} from "next/navigation";
+
 export interface FriendRequest {
     name: string;
     id: string;
@@ -21,6 +25,9 @@ interface NotificationButtonProps {
 }
 
 const NotificationButton: React.FC<NotificationButtonProps> = (props :NotificationButtonProps) => {
+
+    const router = useRouter()
+
     const [open, setOpen] = useState(false);
     const [requests, setRequests] = useState<FriendRequest[]>(props.friendRequests);
 
@@ -29,8 +36,15 @@ const NotificationButton: React.FC<NotificationButtonProps> = (props :Notificati
     };
 
     const handleAccept = (id: string) => {
-        setRequests(requests.filter((request) => request.id !== id));
-        setOpen(false);
+        acceptFriendRequest(id).then(
+            r =>{
+                if(r){
+                    setRequests(requests.filter((request) => request.id !== id));
+                    setOpen(false);
+                    router.refresh()
+                }
+            }
+        )
     };
 
     const handleReject = (id: string) => {
@@ -59,7 +73,14 @@ const NotificationButton: React.FC<NotificationButtonProps> = (props :Notificati
                                 marginBottom: '16px',
                             }}
                         >
-                            <AccountAvatar name={request.name}  />
+                            <Box sx={{
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                padding:'10px'
+                            }}>
+                                <AccountAvatar name={request.name}  />
+                            </Box>
                             <div>
                                 <Typography variant="h6" fontWeight="bold">
                                     {request.name}

@@ -1,8 +1,9 @@
 'use client'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import {Item} from "@/components/item-list";
 import {useState} from "react";
 import {IconButton} from "@mui/material";
+import {handleAddFriend} from "@/server/friend-request";
+
 interface buttonInfo{
     isFriend :boolean;
     id:string
@@ -12,7 +13,7 @@ const AddFriendButton = (props : buttonInfo ) => {
     const [flag, setFlag] = useState(isFriend);
 
     const handleClick = () => {
-        handleAddFriend({id:props.id}).then(
+        handleAddFriend(props.id).then(
             r => {
                 if(r) setFlag(true);
             }
