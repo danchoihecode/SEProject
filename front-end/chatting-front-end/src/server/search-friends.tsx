@@ -6,6 +6,7 @@ import {authOption} from "@/configs/next-auth-config";
 import {Session} from "next-auth";
 import isEmail from "validator/lib/isEmail"
 import {redirect} from "next/navigation";
+import {signOut} from "next-auth/react";
 
 interface SearchData{
     uuid:string,
@@ -26,17 +27,22 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
             cache:"no-cache" && "no-store"
         })
         if(res.ok){
-            const resData:SearchData = await res.json()
-            let data:Item[] = []
-            data.push({
-                conversationName:resData.nickName,
-                isRead:false,
-                conversationID:resData.uuid,
-                isFriend:false
-            })
+            try{
+                const resData:SearchData = await res.json()
+                let data:Item[] = []
+                data.push({
+                    conversationName:resData.nickName,
+                    isRead:false,
+                    conversationID:resData.uuid,
+                    isFriend:false
+                })
 
-            if(data.length > 0){
-                return data
+                if(data.length > 0){
+                    return data
+                }
+            }catch (e){
+                signOut()
+                redirect("/auth/login")
             }
         }
         return []
@@ -51,20 +57,27 @@ export const searchFriend = async (searchText:string):Promise<Item[]> =>{
         })
         if(res.ok){
 
-            const resData:SearchData[] = await res.json()
-            let data:Item[] = []
-            for(let item of resData){
-                data.push({
-                    conversationName:item.nickName,
-                    isRead:false,
-                    conversationID:item.uuid,
-                    isFriend:false
-                })
+            try {
+                const resData:SearchData[] = await res.json()
+                let data:Item[] = []
+                for(let item of resData){
+                    data.push({
+                        conversationName:item.nickName,
+                        isRead:false,
+                        conversationID:item.uuid,
+                        isFriend:false
+                    })
+                }
+                if(data.length > 0){
+                    console.log(data)
+                    return data
+                }
+            }catch (e){
+                signOut()
+                redirect("/auth/login")
+
             }
-            if(data.length > 0){
-                console.log(data)
-                return data
-            }
+
         }
         return []
     }

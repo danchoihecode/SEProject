@@ -1,13 +1,19 @@
 'use client'
-import {useState, useEffect, useContext, useRef} from 'react';
+import {useState, useEffect, useContext, useRef, Suspense} from 'react';
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { Button, TextField, Box } from '@mui/material';
 import ChatMessage from "@/components/chat-message";
 import {SelectedRoomContext} from "@/context/selected-room-context";
+import HistoryMessage from "@/components/history-message";
+import StartConversation from "@/components/start-conversation";
+
+import {QueryClient,QueryClientProvider} from "@tanstack/react-query";
+
 interface MessageProps {
     senderUserId:string,
     senderName: string,
+    token:string
 }
 
 function ChattingBox(props:MessageProps) {
@@ -86,10 +92,21 @@ function ChattingBox(props:MessageProps) {
     }, [messages]);
 
 
+
+    if(selectedIndex === '0')
+        return <StartConversation onClickStart={()=>{}}/>
+
+    const queryClient = new QueryClient()
+
     return (
         <Box sx={{width: '100%', margin: '2.5%'}}>
             <Box display="flex" flexDirection="column" justifyContent="center" >
                 <Box sx={{height: '75.5vh', overflow: 'auto', width: '100%'}}>
+                    {selectedIndex !== '0' ?
+                        <QueryClientProvider client={queryClient}>
+                            <HistoryMessage conversationId={selectedIndex} token={props.token} senderUserId={props.senderUserId}/>
+                        </QueryClientProvider>
+                        : null}
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} username={props.senderUserId}/>
                     ))}

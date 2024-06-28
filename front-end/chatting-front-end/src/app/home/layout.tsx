@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import {ReactNode, Suspense} from "react";
 import {getServerSession} from "next-auth/next";
 import {redirect} from "next/navigation";
 import {Session} from "next-auth";
@@ -22,7 +22,9 @@ export default async function HomeLayOut({children}: Readonly<{ children: ReactN
                 className='layout-page-content'
             >
                 <Card sx={{height:"91vh"}}>
-                    {children}
+                    <Suspense>
+                        {children}
+                    </Suspense>
                 </Card>
             </ContentWrapper>
         </Box>
