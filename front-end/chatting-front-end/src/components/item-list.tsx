@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { SelectedRoomContext } from "@/context/selected-room-context";
 import {List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography,IconButton } from "@mui/material";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AddFriendButton from "@/components/add-friend-button";
 import AccountAvatar from "@/components/letter-avatar";
 import Settings from "@mui/icons-material/Settings";
@@ -23,7 +23,12 @@ const ItemList = (props: ItemListProps) => {
     const { chats } = props;
     const maxLength = 20;
     const router = useRouter();
-
+    useEffect(() => {
+        const interval = setInterval(() => {
+           router.refresh()
+        }, 20000); //set your time here. repeat every 5 seconds
+        return () => clearInterval(interval);
+    }, []);
     if (chats.length === 0) {
         return (
             <List component='nav'>
