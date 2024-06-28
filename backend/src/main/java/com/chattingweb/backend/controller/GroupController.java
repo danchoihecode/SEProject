@@ -37,11 +37,16 @@ public class GroupController {
 	@Autowired
 	private MessageService messageService;
 
-	@GetMapping("/add-member")
+	@PostMapping("/search-user")
 	public ResponseEntity<MemberResponse> searchUser(@RequestBody Map<String, Object> request) {
-		String fullName = request.get("fullName").toString();
-		Optional<MemberResponse> memberResponse = userService.findMemberByFullName(fullName);
-		return memberResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		try {
+			String fullName = request.get("fullName").toString();
+			MemberResponse memberResponse = userService.findMemberByFullName(fullName);
+			return ResponseEntity.ok(memberResponse);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 
 	@PostMapping("/add-member")
@@ -132,24 +137,37 @@ public class GroupController {
 	}
 
 	@PostMapping("/view-group")
-    public ResponseEntity<List<MessageDTO>> getAllMessages(@RequestBody Map<String, Object> request) {
-        try {
-            String conversationIdString = (String) request.get("conversationId");
-            UUID conversationId = UUID.fromString(conversationIdString);
+	public ResponseEntity<List<MessageDTO>> getAllMessages(@RequestBody Map<String, Object> request) {
+		try {
+			String conversationIdString = (String) request.get("conversationId");
+			UUID conversationId = UUID.fromString(conversationIdString);
 
-            List<MessageDTO> messages = messageService.findAllByConversationId(conversationId);
+			List<MessageDTO> messages = messageService.findAllByConversationId(conversationId);
 
-            return ResponseEntity.ok(messages);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+			return ResponseEntity.ok(messages);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PostMapping("/owner-id")
+	public ResponseEntity<String> getGroupOwnerId(@RequestBody Map<String, Object> request) {
+		try {
+			String conversationIdString = (String) request.get("conversationId");
+			UUID conversationId = UUID.fromString(conversationIdString);
+			String id = groupService.getGroupOwnerId(conversationId);
+			return ResponseEntity.ok(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.notFound().build();
+		}
 
-
+	}
 
 	@PostMapping("/groups")
-	public ResponseEntity<Group> createGroup(@RequestParam(name = "groupAvatar", required = false) MultipartFile groupAvatar,
-											 @RequestBody CreateGroupRequest createGroupRequest) {
+	public ResponseEntity<Group> createGroup(
+			@RequestParam(name = "groupAvatar", required = false) MultipartFile groupAvatar,
+			@RequestBody CreateGroupRequest createGroupRequest) {
 		Group createdGroup = groupService.createGroup(groupAvatar, createGroupRequest);
 		return ResponseEntity.ok(createdGroup);
 	}

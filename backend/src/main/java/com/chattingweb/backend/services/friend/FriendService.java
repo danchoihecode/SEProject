@@ -46,7 +46,7 @@ public class FriendService {
         User friend=userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("User not found"));
         List<Friends> friendRequest= friendsRepository.findByUserIdAndFriendId(friendId,userId);
         if(!friendRequest.isEmpty()){
-            Friends friends=friendRequest.getFirst();
+            Friends friends=friendRequest.get(0);
             FriendId friendsId=new FriendId();
             friendsId.setUserId(userId);
             friendsId.setFriendId(friendId);
@@ -71,7 +71,7 @@ public class FriendService {
         User friend=userRepository.findById(friendId).orElseThrow(() -> new RuntimeException("User not found"));
         List<Friends> friendRequest= friendsRepository.findByUserIdAndFriendId(userId,friendId);
         if(!friendRequest.isEmpty()){
-            boolean status=friendRequest.getFirst().isAccepted();
+            boolean status=friendRequest.get(0).isAccepted();
             if(status){
                 return 2;
             }
