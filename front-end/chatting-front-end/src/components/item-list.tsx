@@ -1,23 +1,24 @@
 'use client'
-import { List, ListItemAvatar, ListItemButton, ListItemText, Typography, IconButton } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { useContext } from "react";
 import { SelectedRoomContext } from "@/context/selected-room-context";
+import {List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography,IconButton } from "@mui/material";
+import React, {useContext, useState} from "react";
+import AddFriendButton from "@/components/add-friend-button";
+import AccountAvatar from "@/components/letter-avatar";
 import Settings from "@mui/icons-material/Settings";
 import { useRouter } from "next/navigation";
-
 export type Item = {
-    conversationID: string,
-    conversationName: string,
-    isGroup?: boolean,
-    isRead: boolean
+    conversationID:string,
+    conversationName:string,
+    isGroup?:boolean,
+    isRead:boolean,
+    isFriend:boolean
 }
 
 interface ItemListProps {
     chats: Item[]
 }
-
 const ItemList = (props: ItemListProps) => {
     const { chats } = props;
     const maxLength = 20;
@@ -41,6 +42,27 @@ const ItemList = (props: ItemListProps) => {
         router.push(`/home/option`);
     }
     const listItems = chats.map(chat => {
+        // need to modify isAdded API ?
+        // need to modify isFriend API ?
+        if(!chat.isFriend){
+            return <ListItem
+                key={chat.conversationID}
+                alignItems='flex'
+                sx={{borderRadius:'5px',mb:'5px'}}
+            >
+                <ListItemAvatar>
+                    <AccountAvatar name={chat.conversationName}/>
+                </ListItemAvatar>
+                <ListItemText sx={{height:45}}>
+                    <Typography sx={chat.isRead?{fontWeight:'bold'}:null}>
+                        {chat.conversationName.length > maxLength
+                            ? chat.conversationName.slice(0, maxLength) + '...'
+                            : chat.conversationName}
+                    </Typography>
+                </ListItemText>
+                <AddFriendButton isFriend={chat.isFriend} />
+            </ListItem>
+        }
         return (
             <ListItemButton
                 key={chat.conversationID}
@@ -51,7 +73,7 @@ const ItemList = (props: ItemListProps) => {
                     localStorage.setItem('selectedConversationID', chat.conversationID)}}
             >
                 <ListItemAvatar>
-                    <Avatar alt='tet1' />
+                    <AccountAvatar name={chat.conversationName}/>
                 </ListItemAvatar>
                 <ListItemText sx={{ height: 45 }}>
                     <Typography sx={chat.isRead ? { fontWeight: 'bold' } : null}>
@@ -65,16 +87,9 @@ const ItemList = (props: ItemListProps) => {
                         <Settings fontSize='small' />
                     </IconButton>
                 )}
-                {chat.isRead ? <Box sx={{
-                    bgcolor: 'primary.light',
-                    borderRadius: '50px',
-                    height: '10px',
-                    width: '10px'
-                }} /> : null}
             </ListItemButton>
         );
     });
-
     return (
         <List component='nav'>
             {listItems}

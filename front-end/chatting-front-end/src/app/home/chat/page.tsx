@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import StartConversation from "@/components/start-conversation";
 import {SideBar} from "@/components/side-bar";
 import {SelectedRoomContextProvider} from "@/context/selected-room-context";
 import {Item} from "@/components/item-list";
@@ -19,9 +18,7 @@ export default async function ChatPage(){
             <SelectedRoomContextProvider>
                 <SideBar chats={chats}/>
                 <Divider orientation="vertical"/>
-
-                {/*<StartConversation onClickStart={() =>{}}/>*/}
-                <ChattingBox senderName={name} senderUserId={session.id}/>
+                <ChattingBox senderName={name} senderUserId={session.id} token={session.access_token}/>
             </SelectedRoomContextProvider>
         </Box>
     )

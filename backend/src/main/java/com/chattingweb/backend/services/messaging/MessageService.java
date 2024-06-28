@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.chattingweb.backend.entities.conversation.Conversation;
 import com.chattingweb.backend.entities.user.User;
+import com.chattingweb.backend.models.MessageType;
 import com.chattingweb.backend.repository.conversation.ConversationRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,6 @@ import com.chattingweb.backend.repository.conversation.MessageRepository;
 @Service
 public class MessageService {
 
-
-
 	@Autowired
 	private MessageRepository messageRepository;
 
@@ -32,6 +31,10 @@ public class MessageService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	public List<Message> getMessageHistory(UUID conversationId) {
+        return messageRepository.findAllByConversationId(conversationId);
+	}
 
 	public void saveNewMessage(MessageData messageData) {
 		Optional<Conversation> conversation = conversationRepository.findById(messageData.getConversationId());
@@ -55,18 +58,22 @@ public class MessageService {
 				message.getMessageDate(), message.getSender().getId() // Assuming sender has an ID
 		)).collect(Collectors.toList());
 	}
-	
+
 	public List<MessageData> getConversationMessages(UUID conversationId) {
 		List<MessageData> messageDataList = new ArrayList<>();
 		for (Message message : messageRepository.findByConversationIdOrderByMessageDateAsc(conversationId)) {
-			MessageData messageData = MessageData.builder()
-//			          .messageType(MessageType.CONNECT)
-			          .messageContent(message.getMessageContent())
-			          .senderUserId(message.getSender().getId())
-			          .conversationId(conversationId)
-//			          .sessionId(message.getSessionId())
-			          .build();
-			messageDataList.add(messageData);
+			Optional<User> sender = userRepository.findById(message.getSender().getId());
+			if(sender.isPresent()) {
+				User user = sender.get();
+				MessageData messageData = MessageData.builder()
+						.messageType(MessageType.CHAT)
+						.messageContent(message.getMessageContent())
+						.senderUserId(message.getSender().getId())
+						.conversationId(conversationId)
+						.senderName(user.getNickName())
+						.build();
+				messageDataList.add(messageData);
+			}
 		}
 	    return messageDataList;
 	  }

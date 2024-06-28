@@ -99,8 +99,8 @@ const DefaultPalette = (mode: PaletteMode, themeColor: ThemeColor) => {
     },
     action: {
       active: `rgba(${mainColor}, 0.54)`,
-      hover: '#d2f5ea',
-      selected: '#00eaff',
+      hover: mode === 'light'?'#d2f5ea':'#b700ff',
+      selected: mode === 'light'?'#00eaff':'#008aff',
       disabled: `rgba(${mainColor}, 0.3)`,
       disabledBackground: `rgba(${mainColor}, 0.18)`,
       focus: `rgba(${mainColor}, 0.12)`

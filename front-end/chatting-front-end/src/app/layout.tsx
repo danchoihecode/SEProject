@@ -17,13 +17,13 @@ export default function RootLayout({
   return (
       <html>
           <body>
-              <AppRouterCacheProvider>
+              {/*<AppRouterCacheProvider>*/}
                   <SettingsProvider>
                       <SettingsConsumer>
                           {children}
                       </SettingsConsumer>
                   </SettingsProvider>
-              </AppRouterCacheProvider>
+              {/*</AppRouterCacheProvider>*/}
           </body>
       </html>
 
