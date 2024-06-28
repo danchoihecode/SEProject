@@ -46,9 +46,10 @@ public class ConversationController {
         return ResponseEntity.notFound().build();
     }
     
-    @GetMapping("/{conversationId}")
-    public ResponseEntity<List<MessageData>> getConversationMessages(@PathVariable UUID conversationId) {
+    @GetMapping("/messages")
+    public ResponseEntity<List<MessageData>> getConversationMessages(@RequestParam(name = "id") UUID conversationId) {
 	    List<MessageData> messages = messageService.getConversationMessages(conversationId);
+        log.info("Found {} messages", messages.size());
 	    return ResponseEntity.ok(messages);
     }
 }

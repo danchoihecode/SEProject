@@ -1,32 +1,27 @@
-import {MessageHistory} from "@/components/history-message";
+'use server'
+import {MessageHistory} from "@/components/chatting-box";
+import {getServerSession} from "next-auth/next";
+import {authOption} from "@/configs/next-auth-config";
+import {Session} from "next-auth";
 
 interface HistoryActionProps {
-    conservationId:string,
-    token:string
+    conservationId:string
 }
 
-export async function getMessageHistory(props:HistoryActionProps){
-    const res = await fetch(process.env.BACK_END_URL +`/conservations/${props.conservationId}`,{
+export const getMessageHistory = async (props:HistoryActionProps):Promise<MessageHistory[]> =>{
+    const session = await getServerSession(authOption as any) as Session
+    const res = await fetch(`http://localhost:8080/conversations/messages?id=${props.conservationId}`,{
         method:'GET',
         headers:{
             "Content-Type":"application/json",
-            Authorization:`Bearer ${props.token}`
+            Authorization:`Bearer ${session.access_token}`
         },
         cache:"no-store"
     })
-
-    if(res.ok){
-        try{
-            const data:MessageHistory[] = await res.json()
-            if(data)
-            {
-                console.log(data)
-                return data
-            }
-            return  []
-        }catch (e){
-            return []
-        }
+    if(res.ok) {
+        return await res.json()
+    }else {
+        console.log(res)
     }
-    return []
+
 }
