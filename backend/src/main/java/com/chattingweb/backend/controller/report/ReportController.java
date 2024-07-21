@@ -1,6 +1,6 @@
 package com.chattingweb.backend.controller.report;
 
-import com.chattingweb.backend.services.report.ReportDTO;
+import com.chattingweb.backend.entities.response.ReportDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

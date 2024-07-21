@@ -1,4 +1,4 @@
-package com.chattingweb.backend.services.report;
+package com.chattingweb.backend.entities.response;
 
 public class ReportDTO {
     private Long reportID;
