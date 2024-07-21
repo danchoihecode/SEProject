@@ -9,6 +9,8 @@ import com.chattingweb.backend.repository.admin.ReportRepository;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
 
+import java.util.List;
+
 @Service
 public class ReportService {
 	private final ReportRepository reportRepository;
@@ -39,5 +41,8 @@ public class ReportService {
         report.setPost(post);
         
         return reportRepository.save(report);
+    }
+    public List<Report> reportList(){
+        return reportRepository.findAll();
     }
 }
