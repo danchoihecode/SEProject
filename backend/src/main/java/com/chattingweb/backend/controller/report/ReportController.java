@@ -1,16 +1,15 @@
 package com.chattingweb.backend.controller.report;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.chattingweb.backend.entities.admin.Report;
 import com.chattingweb.backend.services.report.CreateReportRequest;
 import com.chattingweb.backend.services.report.ReportService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Authentication")
@@ -26,5 +25,11 @@ public class ReportController {
     public ResponseEntity<Report> createReport(@RequestBody CreateReportRequest createReportRequest) {
         Report savedReport = reportService.createReport(createReportRequest);
         return ResponseEntity.ok(savedReport);
+    }
+
+    @GetMapping("/reports/list")
+    public ResponseEntity<List<Report>> reportList(){
+        List<Report> reports= reportService.reportList();
+        return ResponseEntity.ok(reports);
     }
 }
