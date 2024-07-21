@@ -1,7 +1,10 @@
 package com.chattingweb.backend.services.report;
 
+import com.chattingweb.backend.entities.response.MemberResponse;
 import com.chattingweb.backend.entities.response.MessageDTO;
 import com.chattingweb.backend.entities.response.ReportDTO;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chattingweb.backend.entities.admin.Report;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
+	@Autowired
 	private final ReportRepository reportRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
@@ -51,5 +55,6 @@ public class ReportService {
         return reports.stream().map(report -> new ReportDTO(report.getId(), report.getReportReason(),
                 report.getUser().getFullName(), report.getPost().getPostText()
         )).collect(Collectors.toList());
+
     }
 }

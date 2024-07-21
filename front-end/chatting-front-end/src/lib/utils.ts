@@ -18,3 +18,4 @@ export function isWithinNextWeek(date: Date): boolean {
 
     return date >= today && date <= nextWeek;
 }
+

@@ -23,4 +23,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> getFriendList(@Param("userId") UUID userId);
 	
 	Optional<User> findByFullName(String fullName);
+	Optional<User> findByIsAdminTrue();
 }

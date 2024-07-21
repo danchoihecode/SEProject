@@ -14,6 +14,9 @@ export default async function HomeLayOut({children}: Readonly<{ children: ReactN
     if(!session || !session.access_token) {
         redirect("/auth/login");
     }
+    if (session.admin) {
+        redirect("/admin");
+    }
     const name = await getUserName()
     return(
         <Box sx={{p:'10px'}}>

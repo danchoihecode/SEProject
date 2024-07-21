@@ -9,19 +9,18 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "deleted_post")
 public class DeletedPost {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", nullable = false)
     private Long id;
-
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    
+    @Column(name = "post_text", length = Integer.MAX_VALUE)
+    private String postText;
 
     @Size(max = 200)
     @NotNull
@@ -32,5 +31,4 @@ public class DeletedPost {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id", nullable = false)
     private User admin;
-
 }
