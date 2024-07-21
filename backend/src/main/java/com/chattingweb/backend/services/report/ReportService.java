@@ -9,6 +9,7 @@ import com.chattingweb.backend.repository.admin.ReportRepository;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,7 +43,13 @@ public class ReportService {
         
         return reportRepository.save(report);
     }
-    public List<Report> reportList(){
-        return reportRepository.findAll();
+    public List<ReportDTO> reportList(){
+        List<Report> reports=reportRepository.findAll();
+        List<ReportDTO> reportDTOs=new ArrayList<ReportDTO>();
+        for(Report report:reports){
+            ReportDTO reportDTO=new ReportDTO(report.getId(),report.getReportReason(),report.getUser().getFullName(),report.getPost().getPostText());
+            reportDTOs.add(reportDTO);
+        }
+        return reportDTOs;
     }
 }
