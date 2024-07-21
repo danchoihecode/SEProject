@@ -1,5 +1,7 @@
 package com.chattingweb.backend.services.report;
 
+import com.chattingweb.backend.entities.response.MessageDTO;
+import com.chattingweb.backend.entities.response.ReportDTO;
 import org.springframework.stereotype.Service;
 
 import com.chattingweb.backend.entities.admin.Report;
@@ -9,7 +11,9 @@ import com.chattingweb.backend.repository.admin.ReportRepository;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -42,7 +46,10 @@ public class ReportService {
         
         return reportRepository.save(report);
     }
-    public List<Report> reportList(){
-        return reportRepository.findAll();
+    public List<ReportDTO> reportList(){
+        List<Report> reports=reportRepository.findAll();
+        return reports.stream().map(report -> new ReportDTO(report.getId(), report.getReportReason(),
+                report.getUser().getFullName(), report.getPost().getPostText()
+        )).collect(Collectors.toList());
     }
 }
