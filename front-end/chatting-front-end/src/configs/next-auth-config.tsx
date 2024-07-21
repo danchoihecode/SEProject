@@ -94,6 +94,7 @@ export const authOption:NextAuthOptions = {
                 let backendResponse:LoginResponseData = SIGN_IN_PROVIDERS.includes(account.provider) ? user as LoginResponseData : account as LoginResponseData;
                 token["access_token"] = backendResponse.token
                 token["id"] = backendResponse.userId
+                token["admin"] = backendResponse.admin
                 return token
             }
             return token

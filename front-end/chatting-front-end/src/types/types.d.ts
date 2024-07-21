@@ -9,7 +9,8 @@ declare type LoginResponseData={
     error:object,
     token:string,
     expiresIn:number,
-    userId:string
+    userId:string,
+    admin:boolean
 }
 
 declare type RegisterResponseData = any

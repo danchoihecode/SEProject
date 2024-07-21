@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import com.chattingweb.backend.entities.response.GroupResponse;
 import com.chattingweb.backend.entities.response.MemberResponse;
 import com.chattingweb.backend.entities.response.MessageDTO;
+import com.chattingweb.backend.entities.response.ReportDTO;
 import com.chattingweb.backend.services.ConversationMemberService;
 import com.chattingweb.backend.services.GroupService;
 import com.chattingweb.backend.services.messaging.MessageService;
+import com.chattingweb.backend.services.report.ReportService;
 import com.chattingweb.backend.services.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -149,7 +151,7 @@ public class GroupController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@PostMapping("/owner-id")
 	public ResponseEntity<String> getGroupOwnerId(@RequestBody Map<String, Object> request) {
 		try {

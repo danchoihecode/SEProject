@@ -41,19 +41,21 @@ public class AdminService {
         bannedUser.setUser(user);
         bannedUser.setBanReason(approveReport.getBanReason());
         bannedUser.setDuration(approveReport.getDuration());
-        User admin= userRepository.findAdmin().get();
+        User admin = userRepository.findByIsAdminTrue().orElseThrow(() -> new RuntimeException("Admin not found"));
         bannedUser.setAdmin(admin);
         bannedUserRepository.save(bannedUser);
 
         DeletedPost deletedPost= new DeletedPost();
         deletedPost.setAdmin(admin);
-        deletedPost.setDeleteReason(approveReport.getBanReason());
+        deletedPost.setDeleteReason(approveReport.getBanReason());   
+        deletedPost.setPostText(report.getPost().getPostText());
         deletedPost.setId(report.getPost().getId());
-        deletedPost.setPost(report.getPost());
-        postRepository.deleteById(report.getPost().getId());
         deletedPostRepository.save(deletedPost);
-
-        reportRepository.delete(report);
+      
+        reportRepository.deleteAllByPostId(report.getPost().getId());
+        postRepository.deleteById(report.getPost().getId());
+        
+        
     }
 
     public void declineReport(Report report){

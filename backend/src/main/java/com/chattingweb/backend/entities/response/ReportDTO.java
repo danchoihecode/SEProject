@@ -13,5 +13,39 @@ public class ReportDTO {
         this.postText=postText;
     }
 
+	public Long getReportID() {
+		return reportID;
+	}
+
+	public void setReportID(Long reportID) {
+		this.reportID = reportID;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPostText() {
+		return postText;
+	}
+
+	public void setPostText(String postText) {
+		this.postText = postText;
+	}
+    
+    
+
 
 }
