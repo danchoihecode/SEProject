@@ -7,6 +7,12 @@ export const adminNavItems: NavItem[] = [
     icon: 'user',
     label: 'user'
   },
+  {
+    title: 'Banned user ',
+    href: '/admin/banned-user',
+    icon: 'user',
+    label: 'user'
+  }
 ];
 
 
