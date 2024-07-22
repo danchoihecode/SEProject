@@ -51,9 +51,9 @@ export const getConversationList = async ():Promise<Item[]> =>{
             return res
         }
     }catch (e){
-        signOut()
-        redirect("/auth/login")
+        return []
     }
+
 
     return []
 }

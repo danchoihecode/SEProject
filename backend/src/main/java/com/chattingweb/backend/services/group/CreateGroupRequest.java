@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Size;
 
 public class CreateGroupRequest {
 	
-	private UUID conversationId;
 	@NotBlank
 	@Size(max = 100,message = "Length of group name must be below 100")	
 	private String groupName;
@@ -25,14 +24,6 @@ public class CreateGroupRequest {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
-	}
-
-	public UUID getConversationId() {
-		return conversationId;
-	}
-
-	public void setConversationId(UUID conversationId) {
-		this.conversationId = conversationId;
 	}
 
 	public UUID getOwnerId() {

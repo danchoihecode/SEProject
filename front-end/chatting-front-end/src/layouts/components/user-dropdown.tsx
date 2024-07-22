@@ -53,10 +53,10 @@ const UserDropdown = (props:Props) => {
             signOut({ redirect: false });
             router.push(url);
             router.refresh();
-        } else if (url.includes('/home/post'))  {
+        } else if (url === '/home/post')  {
             router.push(url);
             router.refresh();
-            }
+        }
         setAnchorEl(null)
     }
 
