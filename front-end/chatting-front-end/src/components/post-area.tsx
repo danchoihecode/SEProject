@@ -4,12 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { pink } from '@mui/material/colors';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import ReportIcon from '@mui/icons-material/Report';
-
-// interface PostAreaProps {
-//     posts: Post[];
-//     onLike: (postId: string) => void;
-//     onPostSubmit: (content: string) => void;
-// }
+import { Grid, Box } from '@mui/material';
 
 export type Post = {
     id: string;
@@ -18,7 +13,11 @@ export type Post = {
     likes: number;
 };
 
-const PostArea: React.FC = ({  }) => {
+interface PostAreaProps {
+    name: string;
+}
+
+const PostArea: React.FC<PostAreaProps> = ({ name }) => {
     const [posts, setPosts] = useState<Post[]>([]);
     useEffect(() => {
         async function fetchData() {
@@ -59,9 +58,6 @@ const PostArea: React.FC = ({  }) => {
         fetchData();
     }, []);
 
-
-
-
     const onLike = (postId: string) => {
         setPosts((prevPosts) =>
             prevPosts.map((post) =>
@@ -96,44 +92,47 @@ const PostArea: React.FC = ({  }) => {
     };
 
     return (
-        <div className="post-area">
-            <div className="new-post-area" style={{display: 'flex', flexDirection: 'column'}}>
-    <textarea
-        placeholder="Write a new post..."
-        value={newPostContent}
-        onChange={(e) => setNewPostContent(e.target.value)}
-        style={{
-            border: '1px solid #ccc',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            padding: '10px',
-            width: '100%',
-            boxSizing: 'border-box',
-            marginBottom: '10px'
-        }}
-    />
-                <PostAddIcon onClick={handlePostSubmit} style={{cursor: 'pointer', color: 'blue' ,width:'2rem', height:'2rem' }} />
-            </div>
-            <div className="post-history">
-                {posts.map((post) => (
-                    <div className="post" key={post.id} style={{
-                        border: '1px solid #ccc',
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                        padding: '10px',
-                        marginTop: '10px'
-                    }}>
-                        <p>{post.content}</p>
-                        <div className="post-footer" style={{display: 'flex',gap: '20px'}}>
-                            <span>{post.date}</span>
-                            <span><ReportIcon style = {{color :'red '}}/>   </span>
-                            <span>
-            <FavoriteBorderIcon onClick={() => handleLike(post.id)} sx={{color: pink[500]}}/>
-                                {post.likes} Like{post.likes !== 1 ? 's' : ''}
-          </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <Grid container spacing={4}>
+            <Grid item md={5}>
+                <Box className="new-post-area" display="flex" flexDirection="column">
+                    <textarea
+                        placeholder="Write a new post..."
+                        value={newPostContent}
+                        onChange={(e) => setNewPostContent(e.target.value)}
+                        style={{
+                            border: '1px solid #ccc',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                            padding: '10px',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            marginBottom: '10px'
+                        }}
+                    />
+                    <PostAddIcon onClick={handlePostSubmit} style={{cursor: 'pointer', color: 'blue' ,width:'2rem', height:'2rem' }} />
+                </Box>
+            </Grid>
+            <Grid item md={7}>
+                <Box className="post-history">
+                    {posts.map((post) => (
+                        <Box className="post" key={post.id} mb={2} style={{
+                            border: '1px solid #ccc',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                            padding: '10px'
+                        }}>
+                            <p>{post.content}</p>
+                            <Box className="post-footer" display="flex" justifyContent="space-between">
+                                <span>{post.date}</span>
+                                <span><ReportIcon style = {{color :'red '}}/>   </span>
+                                <span>
+                                    <FavoriteBorderIcon onClick={() => handleLike(post.id)} sx={{color: pink[500]}}/>
+                                    {post.likes} Like{post.likes !== 1 ? 's' : ''}
+                                </span>
+                            </Box>
+                        </Box>
+                    ))}
+                </Box>
+            </Grid>
+        </Grid>
     );
 };
 

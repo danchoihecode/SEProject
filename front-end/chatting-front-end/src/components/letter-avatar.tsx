@@ -1,6 +1,7 @@
 'use client'
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import router from 'next/router';
 
 // use different background colors for the avatar, based on the name of person.
 export function stringToColor(string: string) {
@@ -29,11 +30,11 @@ export function stringAvatar(name: string) {
 }
 
 interface Props{
-    name:string
+    name:string ,
 }
 export  default function AccountAvatar(props:Props) {
     return (
-        <Avatar
+        <Avatar onClick={() => { router.push(`/home/post/${props.name}`);  }}
             sx={{
                 bgcolor: stringToColor(props.name),
                 cursor: 'pointer',
