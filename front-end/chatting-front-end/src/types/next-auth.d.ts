@@ -5,6 +5,7 @@ declare module 'next-auth' {
         access_token: string,
         exp:number,
         error:string,
-        id:string
+        id:string,
+        admin:boolean
     }
 }

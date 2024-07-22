@@ -1,62 +1,63 @@
 package com.chattingweb.backend.controller;
 
-import com.chattingweb.backend.entities.admin.BannedUser;
-import com.chattingweb.backend.entities.admin.DeletedPost;
-import com.chattingweb.backend.entities.post.Post;
-import com.chattingweb.backend.entities.user.User;
-
-import com.chattingweb.backend.repository.post.PostRepository;
-import com.chattingweb.backend.repository.user.UserRepository;
-import com.chattingweb.backend.services.admin.AdminService;
-import com.chattingweb.backend.services.admin.BanUser;
-import com.chattingweb.backend.services.admin.DeletePost;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.chattingweb.backend.entities.admin.BannedUser;
+import com.chattingweb.backend.entities.admin.DeletedPost;
+import com.chattingweb.backend.entities.admin.Report;
+import com.chattingweb.backend.repository.admin.ReportRepository;
+import com.chattingweb.backend.services.admin.AdminService;
+import com.chattingweb.backend.services.admin.ApproveReport;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    final UserRepository userRepository;
-    private final AdminService adminService;
-    private final PostRepository postRepository;
+	private final AdminService adminService;
+	private final ReportRepository reportRepository;
 
-    public AdminController( UserRepository userRepository, AdminService adminService,PostRepository postRepository) {
-        this.userRepository=userRepository;
-        this.adminService=adminService;
-        this.postRepository=postRepository;
-    }
+	public AdminController(AdminService adminService, ReportRepository reportRepository) {
+		this.adminService = adminService;
+		this.reportRepository = reportRepository;
+	}
 
+	@PostMapping("/approveReport/{reportID}")
+	public ResponseEntity<String> banUser(@PathVariable Long reportID, @RequestBody ApproveReport approveReport) {
+		Optional<Report> report = reportRepository.findById(reportID);
+		if (report.isPresent()) {
+			try {
+				adminService.approveReport(report.get(), approveReport);
+				return ResponseEntity.ok("Deleted successfully");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.notFound().build();
+			}
 
-    @PostMapping("/banUser")
-    public ResponseEntity<BannedUser> banUser (@RequestBody BanUser banUser){
-        UUID bannedID=banUser.getID();
-        Optional<User> user = userRepository.findById(bannedID);
-        if(user.isPresent()){
-            adminService.banUser(banUser);
-            return ResponseEntity.ok().build();
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 
-    }
-    @PostMapping("/deletePost")
-    public ResponseEntity<DeletedPost> banUser (@RequestBody DeletePost deletePost){
-        Optional<Post> post = postRepository.findById(deletePost.getID());
-        if(post.isPresent()){
-            adminService.deletePost(deletePost);
-            return ResponseEntity.ok().build();
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+	}
 
-    }
+	@PostMapping("/declineReport/{reportID}")
+	public ResponseEntity<Void> banUser(@PathVariable Long reportID) {
+		Optional<Report> report = reportRepository.findById(reportID);
+		if (report.isPresent()) {
+			try {
+				adminService.declineReport(report.get());
+				return ResponseEntity.ok().build();
+			} catch (Exception e) {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
 }

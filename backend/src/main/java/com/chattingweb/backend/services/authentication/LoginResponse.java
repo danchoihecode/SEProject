@@ -14,6 +14,9 @@ public class LoginResponse {
     private long expiresIn;
 
     private UUID userId;
+    
+    @Setter
+    private boolean admin;
 
     public LoginResponse setUserId(UUID userId) {
         this.userId = userId;

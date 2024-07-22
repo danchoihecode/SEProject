@@ -4,51 +4,65 @@ import com.chattingweb.backend.entities.post.Post;
 
 import java.util.UUID;
 import java.util.List;
+
 public class UserProfile {
-    private UUID uuid;
-    private String nickName;
+	private UUID uuid;
+	private String nickName;
 
-    public String getFullName() {
-        return fullName;
-    }
+	public UserProfile(UUID uuid, String nickName, String fullName, byte[] avatar, List<Post> postList) {
+		super();
+		this.uuid = uuid;
+		this.nickName = nickName;
+		this.fullName = fullName;
+		this.avatar = avatar;
+		this.postList = postList;
+	}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+	public UserProfile() {
+		
+	}
 
-    private String fullName;
-    private byte[] avatar;
-    private List<Post> postList;
+	public String getFullName() {
+		return fullName;
+	}
 
-    public byte[] getAvatar() {
-        return avatar;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
+	private String fullName;
+	private byte[] avatar;
+	private List<Post> postList;
 
-    public String getNickName() {
-        return nickName;
-    }
+	public byte[] getAvatar() {
+		return avatar;
+	}
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+	public void setAvatar(byte[] avatar) {
+		this.avatar = avatar;
+	}
 
-    public List<Post> getPostList() {
-        return postList;
-    }
+	public String getNickName() {
+		return nickName;
+	}
 
-    public void setPostList(List<Post> postList) {
-        this.postList = postList;
-    }
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
-    public UUID getUuid() {
-        return uuid;
-    }
+	public List<Post> getPostList() {
+		return postList;
+	}
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
+	public void setPostList(List<Post> postList) {
+		this.postList = postList;
+	}
+
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
 }

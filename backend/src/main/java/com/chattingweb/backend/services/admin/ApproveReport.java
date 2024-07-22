@@ -5,10 +5,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
-public class BanUser {
-    @NotBlank(message = "ID is required")
-    private UUID ID;
-
+public class ApproveReport {
     @NotBlank(message = "Ban reason is required")
     @Size(max = 200,message = "Length of ban reason must be below 200")
     private String banReason;
@@ -16,9 +13,6 @@ public class BanUser {
     @NotBlank(message = "duration is required")
     private Integer duration;
 
-    public UUID getID() {
-        return ID;
-    }
     public Integer getDuration() {
         return duration;
     }
