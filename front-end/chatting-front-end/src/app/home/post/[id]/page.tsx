@@ -8,7 +8,7 @@ import AccountAvatar from "@/components/letter-avatara";
 
 const PostPage: NextPage = () => {
     const pathname = usePathname();
-    const [, , , name] = pathname.split('/');
+    const [, , , id] = pathname.split('/');
 
     return (
         <Box>
@@ -25,16 +25,13 @@ const PostPage: NextPage = () => {
                     backgroundPosition: 'center'
                 }}
             >
-                <AccountAvatar name={name || ''} />
+                {/* <AccountAvatar name={id || ''} /> */}
             </Box>
             <Box mt={2} display="flex" justifyContent="center" p={2.5}>
-                <Typography variant="h4" color="black">
-                    {name || ''}
-                </Typography>
             </Box>
 
                 <Box p={2.5}>
-                    <PostArea name={name || ''} />
+                    <PostArea name={id || ''} />
                 </Box>
 
         </Box>

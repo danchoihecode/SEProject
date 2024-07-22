@@ -9,7 +9,7 @@ export const getPostList = async (userId: string): Promise<Post[]> => {
 
     try {
         const response = await fetch(`http://localhost:8080/userprofile?id=${userId}`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${session.access_token}`
