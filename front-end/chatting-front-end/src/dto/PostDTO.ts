@@ -4,3 +4,9 @@ export interface PostDTO {
     postText:string;
     reason:string
 }
+export interface UserDTO {
+    userName :string;
+    reason:string;
+    duration:number;
+    admin:string;
+}
