@@ -49,11 +49,14 @@ const UserDropdown = (props:Props) => {
 
     const handleDropdownClose = (url?: string) => {
         localStorage.clear();
-        if (url) {
-            signOut({redirect:false})
-            router.push(url)
-            router.refresh()
-        }
+        if (url === '/auth/login') {
+            signOut({ redirect: false });
+            router.push(url);
+            router.refresh();
+        } else if (url.includes('/home/post'))  {
+            router.push(url);
+            router.refresh();
+            }
         setAnchorEl(null)
     }
 
@@ -112,7 +115,7 @@ const UserDropdown = (props:Props) => {
                     </Box>
                 </Box>
                 <Divider sx={{ mt: 0, mb: 1 }} />
-                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/home/post/${props.name}`)}>
                     <Box sx={styles}>
                         <AccountOutline sx={{ marginRight: 2 }} />
                         Profile

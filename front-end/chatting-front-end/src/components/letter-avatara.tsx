@@ -35,12 +35,12 @@ interface Props{
 export  default function AccountAvatar(props:Props) {
     return (
         <Avatar onClick={() => { router.push(`/home/post/${props.name}`);  }}
-            sx={{
-                bgcolor: stringToColor(props.name),
-                cursor: 'pointer',
-                height: '2.5rem',
-                width: '2.5rem',
-            }}
+                sx={{
+                    bgcolor: stringToColor(props.name),
+                    cursor: 'pointer',
+                    height: '8rem',
+                    width: '8rem',
+                }}
         >
             {stringAvatar(props.name)}
         </Avatar>
