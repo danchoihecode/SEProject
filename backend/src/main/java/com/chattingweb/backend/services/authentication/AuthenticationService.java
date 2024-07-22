@@ -30,6 +30,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(registerUser.getPassword()));
         user.setEmail(registerUser.getEmail());
         user.setNickName(registerUser.getFullName());
+        user.setIsAdmin(false);
         return userRepository.save(user);
     }
 

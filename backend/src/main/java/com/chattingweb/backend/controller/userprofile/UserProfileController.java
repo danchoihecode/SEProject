@@ -6,6 +6,9 @@ import com.chattingweb.backend.entities.user.User;
 import com.chattingweb.backend.models.UserProfile;
 import com.chattingweb.backend.repository.post.PostRepository;
 import com.chattingweb.backend.repository.user.UserRepository;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@SecurityRequirement(name = "Authentication")
 @RequestMapping("/")
 public class UserProfileController {
 	final UserRepository userRepository;
