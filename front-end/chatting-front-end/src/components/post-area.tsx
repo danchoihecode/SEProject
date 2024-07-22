@@ -5,6 +5,7 @@ import { pink } from '@mui/material/colors';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import ReportIcon from '@mui/icons-material/Report';
 import { Grid, Box } from '@mui/material';
+import { getPostList } from '@/server/view-profile';
 
 export type Post = {
     id: string;
@@ -20,42 +21,9 @@ interface PostAreaProps {
 const PostArea: React.FC<PostAreaProps> = ({ name }) => {
     const [posts, setPosts] = useState<Post[]>([]);
     useEffect(() => {
-        async function fetchData() {
-            setPosts([
-                {
-                    id: '1',
-                    content: 'Excited to share my latest blog post! Check it out.',
-                    date: '2023-06-15',
-                    likes: 10
-                },
-                {
-                    id: '2',
-                    content: 'Just had a great day exploring the city. Loving the summer weather!',
-                    date: '2023-07-01',
-                    likes: 15
-                },
-                {
-                    id: '3',
-                    content: 'Can\'t wait for the weekend. Time to catch up on some reading.',
-                    date: '2023-07-10',
-                    likes: 8
-                },
-                {
-                    id: '4',
-                    content: 'Trying out a new recipe for dinner tonight. Hope it turns out well!',
-                    date: '2023-07-12',
-                    likes: 12
-                },
-                {
-                    id: '5',
-                    content: 'Feeling productive today. Crossed a few items off my to-do list.',
-                    date: '2023-07-16',
-                    likes: 20
-                }
-            ]);
-        }
-
-        fetchData();
+        getPostList(name).then((data) => {
+            if (data) setPosts(data)
+        })
     }, []);
 
     const onLike = (postId: string) => {

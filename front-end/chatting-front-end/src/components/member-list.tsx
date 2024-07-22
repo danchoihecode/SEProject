@@ -10,8 +10,11 @@ import { SelectedRoomContext } from "@/context/selected-room-context";
 import { getOwnerId } from '@/server/get-owner';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const Members: React.FC<{ userId: string }> = ({ userId }) => {
+
+  const router = useRouter();
   const { selectedIndex, setSelectedIndex } = useContext(SelectedRoomContext);
   const [members, setMembers] = useState<MemberDTO[]>([]);
   const [ownerId, setOwnerId] = useState('');
@@ -44,7 +47,7 @@ const Members: React.FC<{ userId: string }> = ({ userId }) => {
       toast.error('You can not remove youself !');
       return;
     }
-    
+
     try {
       await removeMember(memberId, selectedIndex);
       setMembers(prevMembers => prevMembers.filter(member => member.id !== memberId));
@@ -54,11 +57,15 @@ const Members: React.FC<{ userId: string }> = ({ userId }) => {
     }
   };
 
+  const onViewProfile = (id: string) => {
+    router.push(`/home/post/${id}`);
+  };
+
   return (
     <ScrollArea className="h-full">
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-          <MemberTable members={members} onRemove={handleRemove} />
+          <MemberTable members={members} onRemove={handleRemove} onViewProfile={onViewProfile} />
         </div>
       </div>
       <ToastContainer />
@@ -66,7 +73,7 @@ const Members: React.FC<{ userId: string }> = ({ userId }) => {
   );
 }
 
-function MemberTable({ members, onRemove }: { members: MemberDTO[], onRemove: (memberId: string) => void }) {
+function MemberTable({ members, onRemove, onViewProfile }: { members: MemberDTO[], onRemove: (memberId: string) => void, onViewProfile: (id: string) => void }) {
   return (
     <Card>
       <CardHeader>
@@ -81,6 +88,7 @@ function MemberTable({ members, onRemove }: { members: MemberDTO[], onRemove: (m
               <TableHead>Nick name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Action</TableHead>
+              <TableHead>Profile</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -96,6 +104,14 @@ function MemberTable({ members, onRemove }: { members: MemberDTO[], onRemove: (m
                     className="inline-block px-3 py-1 bg-black text-white text-sm rounded transition duration-300 hover:shadow-lg"
                   >
                     Remove
+                  </button>
+                </TableCell>
+                <TableCell>
+                  <button
+                    onClick={() => onViewProfile(member.id)}
+                    className="inline-block px-3 py-1 bg-black text-white text-sm rounded transition duration-300 hover:shadow-lg"
+                  >
+                    Profile
                   </button>
                 </TableCell>
               </TableRow>
