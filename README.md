@@ -14,6 +14,6 @@
     POSTGRES_USER=group15
   ```
 - chạy cmd docker-compose up 
-#### option 2: sử dụng postgres database thật từ pgadmin4 (cái này tôi đéo làm nên mấy ô tự nghiên cứu)
+#### option 2: sử dụng postgres database thật từ pgadmin4 
 - cài đặt rồi tạo database bằng GUI cho cùng tên db user với password như trong file .env
 - rồi chạy file sql có sẵn
